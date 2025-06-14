@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>홈퀵 - MVP 프로토타입</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans KR', 'Inter', sans-serif;
+        }
+        .step-active {
+            border-color: #3b82f6;
+            color: #3b82f6;
+        }
+        .step-inactive {
+            border-color: #d1d5db;
+            color: #6b7280;
+        }
+        .form-input:focus {
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+            outline: none;
+        }
+        .modal-backdrop {
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+        .gradient-bg {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
+    </style>
+</head>
+<body class="gradient-bg min-h-screen flex items-center justify-center p-4">
+    <div class="w-full max-w-2xl bg-white rounded-2xl shadow-2xl p-6 md:p-10 transform transition-all duration-500">
+        <!-- 헤더 -->
+        <div class="text-center mb-8">
+            <h1 class="text-3xl md:text-4xl font-bold text-gray-800">🏠 홈퀵</h1>
+            <p class="text-gray-500 mt-2 text-md md:text-lg">내 집 팔기, 가장 빠르고 간편하게</p>
+            <p class="text-gray-500 text-sm">단 1분 만에 내 매물을 주변 부동산 수십 곳에 알려보세요.</p>
+        </div>
+
+        <!-- 진행 단계 -->
+        <div class="flex justify-center items-center space-x-4 md:space-x-8 mb-10">
+            <div class="step-active flex items-center flex-col md:flex-row text-center">
+                <div class="w-8 h-8 md:w-10 md:h-10 rounded-full border-2 font-bold flex items-center justify-center">1</div>
+                <span class="font-semibold mt-2 md:mt-0 md:ml-2">매물 정보 입력</span>
+            </div>
+            <div class="flex-1 h-0.5 bg-gray-200"></div>
+            <div class="step-inactive flex items-center flex-col md:flex-row text-center">
+                <div class="w-8 h-8 md:w-10 md:h-10 rounded-full border-2 font-bold flex items-center justify-center">2</div>
+                <span class="font-semibold mt-2 md:mt-0 md:ml-2">발송 및 회신 확인</span>
+            </div>
+        </div>
+        
+        <!-- 매물 등록 폼 -->
+        <form id="property-form">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- 제목 -->
+                <div class="md:col-span-2">
+                    <label for="title" class="block text-sm font-medium text-gray-700 mb-1">매물 제목</label>
+                    <input type="text" id="title" class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg transition" placeholder="예) 강남역 5분 거리, 신축급 오피스텔 급매">
+                </div>
+
+                <!-- 지역 선택 -->
+                <div>
+                    <label for="city" class="block text-sm font-medium text-gray-700 mb-1">지역 (시/도)</label>
+                    <select id="city" class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg transition bg-white">
+                        <option>서울특별시</option>
+                        <option>경기도</option>
+                        <option>인천광역시</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="district" class="block text-sm font-medium text-gray-700 mb-1">지역 (시/군/구)</label>
+                    <input type="text" id="district" class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg transition" placeholder="예) 강남구">
+                </div>
+                
+                <!-- 면적 -->
+                <div>
+                    <label for="area" class="block text-sm font-medium text-gray-700 mb-1">전용 면적 (m²)</label>
+                    <input type="number" id="area" class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg transition" placeholder="예) 84">
+                </div>
+
+                <!-- 가격 -->
+                <div>
+                    <label for="price" class="block text-sm font-medium text-gray-700 mb-1">매매가 (만원)</label>
+                    <input type="number" id="price" class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg transition" placeholder="예) 120000 (12억)">
+                </div>
+
+                <!-- 연락처 -->
+                <div class="md:col-span-2">
+                    <label for="contact" class="block text-sm font-medium text-gray-700 mb-1">회신 받을 연락처</label>
+                    <input type="tel" id="contact" class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg transition" placeholder="'-' 없이 숫자만 입력하세요">
+                </div>
+            </div>
+
+            <!-- 개인정보 동의 -->
+            <div class="mt-6 flex items-start">
+                <div class="flex items-center h-5">
+                    <input id="agreement" name="agreement" type="checkbox" class="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300 rounded">
+                </div>
+                <div class="ml-3 text-sm">
+                    <label for="agreement" class="text-gray-600">개인정보 수집 및 이용, 제3자 제공에 동의합니다.</label>
+                </div>
+            </div>
+
+            <!-- 제출 버튼 -->
+            <div class="mt-8">
+                <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-4 rounded-lg transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:bg-gray-400 disabled:cursor-not-allowed">
+                    문자 내용 확인하고 발송하기
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <!-- 모달 창 -->
+    <div id="modal" class="fixed inset-0 z-50 items-center justify-center hidden">
+        <div class="modal-backdrop fixed inset-0"></div>
+        <div class="bg-white rounded-2xl shadow-2xl p-6 md:p-8 w-11/12 max-w-md mx-auto relative transform transition-all duration-300 scale-95 opacity-0">
+            <h2 class="text-2xl font-bold text-center text-gray-800 mb-4">📢 발송될 문자 메시지</h2>
+            <p class="text-sm text-center text-gray-500 mb-6">아래 내용으로 주변 부동산에 문자가 발송됩니다.</p>
+            
+            <!-- SMS 미리보기 -->
+            <div class="bg-gray-100 rounded-lg p-4">
+                <p class="text-sm text-gray-800 whitespace-pre-wrap" id="sms-preview"></p>
+                <p class="text-xs text-gray-400 mt-4 text-right">광고 (홈퀵 발송대행)</p>
+            </div>
+            
+            <div class="text-center bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-3 mt-6 rounded-md text-sm">
+                <p>문자 내용은 수정할 수 없으며, 고정된 양식으로 발송됩니다.</p>
+            </div>
+            
+            <div class="mt-8 text-center">
+                <p class="text-lg font-semibold text-gray-700" id="realtor-count">강남구 주변 <span class="text-blue-600 font-bold">128개</span> 부동산에 발송됩니다.</p>
+                <p class="text-2xl font-bold text-gray-900 mt-2">결제 금액: 3,000원</p>
+            </div>
+
+            <!-- 버튼 그룹 -->
+            <div class="mt-8 grid grid-cols-2 gap-4">
+                <button id="close-modal-btn" class="w-full bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-3 px-4 rounded-lg transition">
+                    수정하기
+                </button>
+                <button id="payment-btn" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-lg transition">
+                    결제하고 발송
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const form = document.getElementById('property-form');
+        const modal = document.getElementById('modal');
+        const modalBackdrop = modal.querySelector('.modal-backdrop');
+        const modalContent = modal.querySelector('.bg-white');
+        const closeModalBtn = document.getElementById('close-modal-btn');
+        const paymentBtn = document.getElementById('payment-btn');
+        const agreementCheckbox = document.getElementById('agreement');
+        const submitButton = form.querySelector('button[type="submit"]');
+
+        function validateForm() {
+            const title = document.getElementById('title').value;
+            const district = document.getElementById('district').value;
+            const area = document.getElementById('area').value;
+            const price = document.getElementById('price').value;
+            const contact = document.getElementById('contact').value;
+            const agreement = agreementCheckbox.checked;
+
+            return title && district && area && price && contact && agreement;
+        }
+        
+        function updateSubmitButtonState() {
+             submitButton.disabled = !validateForm();
+        }
+
+        form.addEventListener('input', updateSubmitButtonState);
+        agreementCheckbox.addEventListener('change', updateSubmitButtonState);
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            if (!validateForm()) {
+                 alert('모든 필수 항목을 입력하고 개인정보 동의에 체크해주세요.');
+                 return;
+            }
+
+            // 폼 데이터 가져오기
+            const title = document.getElementById('title').value;
+            const city = document.getElementById('city').value;
+            const district = document.getElementById('district').value;
+            const area = document.getElementById('area').value;
+            const price = document.getElementById('price').value;
+            const contact = document.getElementById('contact').value;
+            
+            // 면적(평) 변환
+            const pyeong = (parseFloat(area) / 3.3058).toFixed(1);
+            
+            // 가격 포맷팅 (억, 만원)
+            let priceText;
+            const priceInTenThousand = parseInt(price, 10);
+            if (priceInTenThousand >= 10000) {
+                const eok = Math.floor(priceInTenThousand / 10000);
+                const man = priceInTenThousand % 10000;
+                priceText = `${eok}억`;
+                if (man > 0) {
+                    priceText += ` ${man.toLocaleString()}만원`;
+                }
+            } else {
+                priceText = `${priceInTenThousand.toLocaleString()}만원`;
+            }
+
+            // SMS 템플릿 생성
+            const smsContent = `[신규 매물 접수]\n\n- 제목: ${title}\n- 지역: ${city} ${district}\n- 면적: ${area}m² (${pyeong}평)\n- 가격: ${priceText}\n\n* 본 매물에 관심 있으시면 회신주세요.\n* 매도자 연락처: ${contact}`;
+            
+            document.getElementById('sms-preview').innerText = smsContent;
+            document.getElementById('realtor-count').innerHTML = `${district} 주변 <span class="text-blue-600 font-bold">${Math.floor(Math.random() * 50) + 100}개</span> 부동산에 발송됩니다.`;
+
+            // 모달 보이기
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            setTimeout(() => {
+                modalContent.classList.remove('scale-95', 'opacity-0');
+                modalContent.classList.add('scale-100', 'opacity-100');
+            }, 10);
+        });
+
+        function hideModal() {
+            modalContent.classList.add('scale-95', 'opacity-0');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            }, 300);
+        }
+
+        closeModalBtn.addEventListener('click', hideModal);
+        modalBackdrop.addEventListener('click', hideModal);
+
+        paymentBtn.addEventListener('click', () => {
+            alert('결제 시스템 연동 후 실제 발송이 진행됩니다. (MVP 프로토타입)');
+            hideModal();
+        });
+        
+        // 초기 버튼 상태 설정
+        updateSubmitButtonState();
+    </script>
+</body>
+</html>
