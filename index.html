@@ -1,9 +1,11 @@
+<!-- 파일 이름: index.html -->
+<!-- 이 코드로 GitHub의 index.html 파일 내용을 완전히 덮어쓰세요. -->
 <!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>홈퀵 - MVP 최종 수정본</title>
+    <title>홈퀵 - 기능 개선 최종본</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
@@ -11,13 +13,10 @@
         .form-input:focus { border-color: #3b82f6; box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2); outline: none; }
         .modal-backdrop { background-color: rgba(0, 0, 0, 0.5); }
         .gradient-bg { background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); }
-        .loader { border: 4px solid #f3f3f3; border-top: 4px solid #3498db; border-radius: 50%; width: 40px; height: 40px; animation: spin 2s linear infinite; }
+        .loader { border: 2px solid #f3f3f3; border-top: 2px solid #3498db; border-radius: 50%; width: 16px; height: 16px; animation: spin 1s linear infinite; }
+        .form-loader { border: 4px solid #f3f3f3; border-top: 4px solid #3498db; border-radius: 50%; width: 24px; height: 24px; animation: spin 2s linear infinite; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-
-        /* --- CSS 수정 제안 반영 --- */
-        .modal-content {
-            transition: transform 0.3s ease-out, opacity 0.3s ease-out;
-        }
+        .modal-content { transition: transform 0.3s ease-out, opacity 0.3s ease-out; }
     </style>
 </head>
 <body class="gradient-bg min-h-screen flex items-center justify-center p-4">
@@ -42,8 +41,11 @@
                 <div>
                     <label for="district" class="block text-sm font-medium text-gray-700 mb-1">지역 (시/구)</label>
                     <select id="district" class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg transition bg-white" required>
+                        <option value="">구를 선택하세요</option>
                         <option>강남구</option><option>강동구</option><option>강북구</option><option>강서구</option><option>관악구</option><option>광진구</option><option>구로구</option><option>금천구</option><option>노원구</option><option>도봉구</option><option>동대문구</option><option>동작구</option><option>마포구</option><option>서대문구</option><option>서초구</option><option>성동구</option><option>성북구</option><option>송파구</option><option>양천구</option><option>영등포구</option><option>용산구</option><option>은평구</option><option>종로구</option><option>중구</option><option>중랑구</option>
                     </select>
+                    <!-- NEW: 지역 선택 시 부동산 개수 표시 영역 -->
+                    <div id="district-info" class="mt-2 text-sm text-gray-600 h-5 flex items-center"></div>
                 </div>
                 <div>
                     <label for="pyeong" class="block text-sm font-medium text-gray-700 mb-1">평수</label>
@@ -69,7 +71,7 @@
             <div class="mt-8">
                 <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-4 rounded-lg transition duration-300 flex items-center justify-center">
                     <span id="submit-btn-text">문자 내용 확인하고 발송하기</span>
-                    <div id="submit-loader" class="loader hidden" style="width:24px; height:24px; border-width:3px;"></div>
+                    <div id="submit-loader" class="form-loader hidden"></div>
                 </button>
             </div>
         </form>
@@ -78,7 +80,6 @@
     <!-- 모달 창 -->
     <div id="modal" class="fixed inset-0 z-50 items-center justify-center hidden">
         <div class="modal-backdrop fixed inset-0"></div>
-        <!-- --- HTML 수정 제안 반영 --- -->
         <div class="modal-content bg-white rounded-2xl shadow-2xl p-6 md:p-8 w-11/12 max-w-md mx-auto relative transform scale-95 opacity-0">
             <h2 class="text-2xl font-bold text-center text-gray-800 mb-4">📢 발송될 문자 메시지</h2>
             <div class="bg-gray-100 rounded-lg p-4">
@@ -86,11 +87,11 @@
             </div>
             <div class="mt-8 text-center">
                 <p class="text-lg font-semibold text-gray-700" id="realtor-count">... 부동산 리스트를 불러오는 중 ...</p>
-                <p class="text-2xl font-bold text-gray-900 mt-2">결제 금액: 3,000원</p>
+                <p class="text-2xl font-bold text-gray-900 mt-2" id="price-display">결제 금액: 3,000원</p>
             </div>
             <div class="mt-8 grid grid-cols-2 gap-4">
                 <button id="close-modal-btn" class="w-full bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-3 px-4 rounded-lg transition">수정하기</button>
-                <button id="payment-btn" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-lg transition">결제하고 발송</button>
+                <button id="payment-btn" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-lg transition disabled:bg-gray-400 disabled:cursor-not-allowed">결제하고 발송</button>
             </div>
         </div>
     </div>
@@ -98,13 +99,44 @@
     <script>
         const form = document.getElementById('property-form');
         const modal = document.getElementById('modal');
+        const districtSelect = document.getElementById('district');
+        const districtInfo = document.getElementById('district-info');
         const submitButton = form.querySelector('button[type="submit"]');
         const submitBtnText = document.getElementById('submit-btn-text');
         const submitLoader = document.getElementById('submit-loader');
-
-        // --- JavaScript 수정 제안 반영 (모달 로직) ---
         const modalContent = modal.querySelector('.modal-content');
+        const realtorCountText = document.getElementById('realtor-count');
+        const priceDisplayText = document.getElementById('price-display');
+        const paymentBtn = document.getElementById('payment-btn');
 
+        // NEW: 지역(구) 선택 시 부동산 개수 즉시 확인
+        districtSelect.addEventListener('change', async (e) => {
+            const district = e.target.value;
+            if (!district) {
+                districtInfo.innerHTML = '';
+                return;
+            }
+            
+            districtInfo.innerHTML = `<div class="loader"></div><span class="ml-2">부동산 정보 조회 중...</span>`;
+
+            try {
+                const city = document.getElementById('city').value;
+                const response = await fetch(`/.netlify/functions/get-realtors?city=${encodeURIComponent(city)}&district=${encodeURIComponent(district)}`);
+                if (!response.ok) throw new Error('Server error');
+                
+                const data = await response.json();
+                if (data.count > 0) {
+                    districtInfo.innerHTML = `✅ <span class="ml-2 text-blue-600 font-semibold">${data.count}개</span>의 등록 가능한 부동산이 있습니다.`;
+                } else {
+                    districtInfo.innerHTML = `⚠️ <span class="ml-2 text-red-600 font-semibold">해당 지역에 등록된 부동산이 없습니다.</span>`;
+                }
+            } catch (error) {
+                console.error("Error fetching district info:", error);
+                districtInfo.innerHTML = `❌ <span class="ml-2">정보를 불러오지 못했습니다.</span>`;
+            }
+        });
+
+        // 폼 제출 시 로직
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
             submitBtnText.classList.add('hidden');
@@ -113,13 +145,12 @@
 
             const title = document.getElementById('title').value;
             const city = document.getElementById('city').value;
-            const district = document.getElementById('district').value;
+            const district = districtSelect.value;
             const pyeong = document.getElementById('pyeong').value; 
             const price = document.getElementById('price').value;
             const contact = document.getElementById('contact').value;
             
             const area_m2 = (parseFloat(pyeong) * 3.3058).toFixed(1);
-            
             let priceText;
             const priceInTenThousand = parseInt(price, 10);
             if (priceInTenThousand >= 10000) {
@@ -130,26 +161,33 @@
             } else {
                 priceText = `${priceInTenThousand.toLocaleString()}만원`;
             }
-
             const smsContent = `[신규 매물 접수]\n\n- 제목: ${title}\n- 지역: ${city} ${district}\n- 면적: ${pyeong}평 (${area_m2}m²)\n- 가격: ${priceText}\n\n* 본 매물에 관심 있으시면 회신주세요.\n* 매도자 연락처: ${contact}`;
             document.getElementById('sms-preview').innerText = smsContent;
 
             showModal();
+            realtorCountText.innerText = '... 부동산 리스트를 불러오는 중 ...';
+            priceDisplayText.classList.remove('hidden');
+            paymentBtn.disabled = true; // 기본적으로 비활성화
             
             try {
                 const response = await fetch(`/.netlify/functions/get-realtors?city=${encodeURIComponent(city)}&district=${encodeURIComponent(district)}`);
-                
-                if (!response.ok) {
-                    const errorData = await response.json().catch(() => ({ error: "서버 응답을 분석할 수 없습니다." }));
-                    throw new Error(`서버 오류 (${response.status}): ${errorData.error || response.statusText}`);
-                }
+                if (!response.ok) throw new Error('Server error');
                 
                 const data = await response.json();
-                document.getElementById('realtor-count').innerHTML = `${district} 주변 <span class="text-blue-600 font-bold">${data.count}개</span> 부동산에 발송됩니다.`;
+                
+                // NEW: 부동산 개수에 따른 분기 처리
+                if (data.count > 0) {
+                    realtorCountText.innerHTML = `<span class="text-blue-600 font-bold">${district}</span> 주변 <span class="text-blue-600 font-bold">${data.count}개</span> 부동산에 발송됩니다.`;
+                    paymentBtn.disabled = false; // 부동산이 있을 때만 결제 버튼 활성화
+                } else {
+                    realtorCountText.innerHTML = `<span class="text-red-600 font-bold">'${district}'</span>에는 등록 가능한 부동산이 없습니다. <br/>다른 지역을 선택해주세요.`;
+                    priceDisplayText.classList.add('hidden'); // 가격 정보 숨김
+                }
 
             } catch (error) {
                 console.error("Airtable 연동 중 에러 발생:", error);
-                document.getElementById('realtor-count').innerText = "오류 발생: 새로고침 후 다시 시도해주세요.";
+                realtorCountText.innerText = "오류 발생: 새로고침 후 다시 시도해주세요.";
+                priceDisplayText.classList.add('hidden');
             } finally {
                 submitBtnText.classList.remove('hidden');
                 submitLoader.classList.add('hidden');
@@ -157,7 +195,7 @@
             }
         });
 
-        // --- JavaScript 수정 제안 반영 (모달 제어 함수) ---
+        // 모달 제어 함수
         function showModal() {
             modal.classList.remove('hidden');
             modal.classList.add('flex');
@@ -165,7 +203,6 @@
                 modalContent.classList.remove('scale-95', 'opacity-0');
             });
         }
-
         function hideModal() {
             modalContent.classList.add('scale-95', 'opacity-0');
             modalContent.addEventListener('transitionend', () => {
@@ -173,13 +210,69 @@
                 modal.classList.remove('flex');
             }, { once: true });
         }
-
         document.getElementById('close-modal-btn').addEventListener('click', hideModal);
         document.querySelector('.modal-backdrop').addEventListener('click', hideModal);
-        document.getElementById('payment-btn').addEventListener('click', () => {
+        paymentBtn.addEventListener('click', () => {
             alert('결제 시스템 연동 후 실제 발송이 진행됩니다.');
             hideModal();
         });
     </script>
 </body>
 </html>
+```javascript
+/*
+ * 파일 이름: netlify/functions/get-realtors.js
+ * 이 코드는 변경할 필요가 없습니다. 현재 로직이 좋습니다.
+ * 그대로 유지하시면 됩니다.
+ */
+exports.handler = async function(event) {
+  const { AIRTABLE_PERSONAL_TOKEN, AIRTABLE_BASE_ID } = process.env;
+  const AIRTABLE_TABLE_NAME = '부동산DB';
+
+  // city 파라미터는 현재 사용하지 않지만, 나중을 위해 남겨둡니다.
+  const { city, district } = event.queryStringParameters;
+  
+  if (!district) {
+      return {
+          statusCode: 400,
+          body: JSON.stringify({ error: 'District is required' })
+      };
+  }
+
+  const filterFormula = `{District} = "${district}"`;
+  const url = `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${encodeURIComponent(AIRTABLE_TABLE_NAME)}?filterByFormula=${encodeURIComponent(filterFormula)}`;
+  
+  const fetch = (await import('node-fetch')).default;
+
+  try {
+    const response = await fetch(url, {
+      headers: {
+        'Authorization': `Bearer ${AIRTABLE_PERSONAL_TOKEN}`,
+      },
+    });
+
+    if (!response.ok) {
+      const errorBody = await response.text();
+      console.error(`Airtable API Error: ${response.statusText}`, errorBody);
+      return {
+        statusCode: response.status,
+        body: JSON.stringify({ error: `Airtable API Error: ${response.statusText}` }),
+      };
+    }
+
+    const data = await response.json();
+    const count = data.records.length;
+
+    return {
+      statusCode: 200,
+      body: JSON.stringify({ count: count }),
+    };
+
+  } catch (error) {
+    console.error('Function execution error:', error);
+    return {
+      statusCode: 500,
+      body: JSON.stringify({ error: 'Function execution error.' }),
+    };
+  }
+};
