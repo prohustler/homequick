@@ -1,7 +1,6 @@
 /*
  * 최종 파일 경로: /netlify/functions/get-realtors.js
  * 이 코드가 모든 문제를 해결할 최종 버전입니다.
- * 이 파일 외에 다른 곳에 get-realtors.js 파일이 있으면 안 됩니다.
  */
 exports.handler = async function(event) {
   // --- 1. Netlify 환경 변수 확인 ---
