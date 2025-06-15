@@ -45,7 +45,7 @@
                 <div>
                     <label for="district" class="block text-sm font-medium text-gray-700 mb-1">지역 (시/구)</label>
                   <!--   <input type="text" id="district" class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg transition" placeholder="예) 강남구" required> -->
-                     <select id="city" class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg transition bg-white" required>
+                     <select id="district" class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg transition bg-white" required>
                         <option>강남구</option>
                         <option>강동구</option>
                         <option>강북구</option>
@@ -74,8 +74,8 @@
                     </select>
                 </div>
                 <div>
-                    <label for="area" class="block text-sm font-medium text-gray-700 mb-1">평수</label>
-                    <input type="number" id="area" class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg transition" placeholder="예) 25" required>
+                    <label for="pyeong" class="block text-sm font-medium text-gray-700 mb-1">평수</label>
+                    <input type="number" id="pyeong" class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg transition" placeholder="예) 25" required>
                 </div>
                 <div>
                     <label for="price" class="block text-sm font-medium text-gray-700 mb-1">매매가 (만원)</label>
@@ -139,7 +139,8 @@
             const title = document.getElementById('title').value;
             const city = document.getElementById('city').value;
             const district = document.getElementById('district').value;
-            const area = document.getElementById('area').value;
+            const pyeong_input = document.getElementById('pyeong').value;
+            const area_m2 = (parseFloat(pyeong_input) * 3.3058).toFixed(1);
             const price = document.getElementById('price').value;
             const contact = document.getElementById('contact').value;
             
@@ -154,8 +155,7 @@
             } else {
                 priceText = `${priceInTenThousand.toLocaleString()}만원`;
             }
-            const smsContent = `[신규 매물 접수]\n\n- 제목: ${title}\n- 지역: ${city} ${district}\n- 면적: ${area}m² (${pyeong}평)\n- 가격: ${priceText}\n\n* 본 매물에 관심 있으시면 회신주세요.\n* 매도자 연락처: ${contact}`;
-            document.getElementById('sms-preview').innerText = smsContent;
+            const smsContent = `[신규 매물 접수]\n\n- 제목: ${title}\n- 지역: ${city} ${district}\n- 면적: <span class="math-inline">\{pyeong\_input\}평 \(</span>{area_m2}m²)\n- 가격: ${priceText}\n\n* 본 매물에 관심 있으시면 회신주세요.\n* 매도자 연락처: ${contact}`;            document.getElementById('sms-preview').innerText = smsContent;
 
             // Show Modal
             modal.classList.remove('hidden');
@@ -166,7 +166,7 @@
 
             try {
                 // Call Netlify serverless function
-                const response = await fetch(`/.netlify/functions/get-realtors?city=${encodeURIComponent(city)}&district=${encodeURIComponent(district)}`);
+                const response = await fetch(`/.netlify/functions/get-realtors?city=<span class="math-inline">\{encodeURIComponent\(city\)\}&district\=</span>{encodeURIComponent(district)}`);
                 if (!response.ok) throw new Error(`Server error: ${response.statusText}`);
                 const data = await response.json();
                 document.getElementById('realtor-count').innerHTML = `${district} 주변 <span class="text-blue-600 font-bold">${data.count}개</span> 부동산에 발송됩니다.`;
