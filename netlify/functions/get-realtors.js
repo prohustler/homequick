@@ -1,15 +1,18 @@
 /*
  * 최종 파일 경로: /netlify/functions/get-realtors.js
- * 이 코드가 모든 문제를 해결할 최종 버전입니다.
+ * Airtable 테이블 이름을 'Realtors'로 변경한 최종 버전입니다.
  */
 exports.handler = async function(event) {
   // --- 1. Netlify 환경 변수 확인 ---
   console.log("--- 최종 디버깅 코드 실행 시작 ---");
   const { AIRTABLE_PERSONAL_TOKEN, AIRTABLE_BASE_ID } = process.env;
-  const AIRTABLE_TABLE_NAME = '부동산DB';
+  
+  // FIX: 테이블 이름을 'Realtors'로 변경
+  const AIRTABLE_TABLE_NAME = 'Realtors'; 
 
   console.log("읽어온 Base ID 설정 여부:", AIRTABLE_BASE_ID ? "OK" : "ERROR: 설정되지 않음!");
   console.log("읽어온 Personal Token 설정 여부:", AIRTABLE_PERSONAL_TOKEN ? "OK" : "ERROR: 설정되지 않음!");
+  console.log("사용할 테이블 이름:", AIRTABLE_TABLE_NAME);
 
   const { district } = event.queryStringParameters;
   console.log("요청받은 지역(district):", district);
@@ -25,7 +28,6 @@ exports.handler = async function(event) {
   
   console.log("생성된 Airtable 요청 URL:", url);
 
-  // 'node-fetch' 라이브러리를 가져옵니다.
   const fetch = (await import('node-fetch')).default;
 
   try {
