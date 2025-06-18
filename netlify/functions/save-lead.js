@@ -1,3 +1,8 @@
+/*
+ * 파일 이름: netlify/functions/save-lead.js
+ * 이 파일을 'netlify/functions' 폴더 안에 새로 만들어주세요.
+ * 사용자가 입력한 매물 정보를 Airtable의 'Leads' 테이블에 저장하는 역할을 합니다.
+ */
 exports.handler = async function(event) {
   // POST 요청이 아니면 에러 처리
   if (event.httpMethod !== 'POST') {
