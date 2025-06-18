@@ -241,13 +241,13 @@
                 if (!response.ok) throw new Error('Server error');
                 const data = await response.json();
                 if (data.count > 0) {
-                    districtInfo.innerHTML = `✅ <span class="ml-2 text-blue-600 font-semibold">${data.count}개</span>의 등록 가능한 부동산이 있습니다.`;
+                    districtInfo.innerHTML = `✅ <span class="ml-2 text-blue-600 font-semibold">${data.count}개</span> 부동산에 발송할 수 있어요.`;
                 } else {
-                    districtInfo.innerHTML = `⚠️ <span class="ml-2 text-red-600 font-semibold">해당 지역에 등록된 부동산이 없습니다.</span>`;
+                    districtInfo.innerHTML = `⚠️ <span class="ml-2 text-red-600 font-semibold">해당 지역에 등록된 부동산이 없어요.</span>`;
                 }
             } catch (error) {
                 console.error("Error fetching district info:", error);
-                districtInfo.innerHTML = `❌ <span class="ml-2">정보를 불러오지 못했습니다.</span>`;
+                districtInfo.innerHTML = `❌ <span class="ml-2">정보를 불러오지 못했어요.</span>`;
             }
         });
 
@@ -287,10 +287,10 @@
                 if (!response.ok) throw new Error('Server error');
                 const realtorData = await response.json();
                 if (realtorData.count > 0) {
-                    realtorCountText.innerHTML = `<span class="text-blue-600 font-bold">${data.district}</span> 주변 <span class="text-blue-600 font-bold">${realtorData.count}개</span> 부동산에 발송됩니다.`;
+                    realtorCountText.innerHTML = `<span class="text-blue-600 font-bold">${data.district}</span> 주변 <span class="text-blue-600 font-bold">${realtorData.count}개</span> 부동산에 발송해요.`;
                     paymentBtn.disabled = false;
                 } else {
-                    realtorCountText.innerHTML = `<span class="text-red-600 font-bold">'${data.district}'</span>에는 등록 가능한 부동산이 없습니다. <br/>다른 지역을 선택해주세요.`;
+                    realtorCountText.innerHTML = `<span class="text-red-600 font-bold">'${data.district}'</span>에는 등록 가능한 부동산이 없어요. <br/>다른 지역을 선택해주세요.`;
                     priceDisplayText.classList.add('hidden');
                 }
             } catch (error) {
@@ -352,7 +352,7 @@
                 });
                 if (!response.ok) throw new Error('Failed to save lead');
                 
-                saveStatusText.innerText = '✅ 매물 정보가 안전하게 저장되었습니다!';
+                saveStatusText.innerText = '✅ 매물 정보가 안전하게 저장되었어요!';
                 setTimeout(() => {
                     alert('결제 및 발송 기능은 다음 단계에서 구현됩니다.');
                     hideModal();
