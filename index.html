@@ -24,7 +24,7 @@
 <body class="gradient-bg min-h-screen flex items-center justify-center p-4">
     <div class="w-full max-w-2xl bg-white rounded-2xl shadow-2xl p-6 md:p-10">
         <div class="text-center mb-8">
-            <h1 class="text-3xl md:text-4xl font-bold text-gray-800">🏠 홈퀵</h1>
+            <h1 class="text-3xl md:text-4xl font-bold text-gray-800">� 홈퀵</h1>
             <p class="text-gray-500 mt-2 text-md md:text-lg">내 집 팔기, 가장 빠르고 간편하게</p>
         </div>
 
@@ -148,31 +148,22 @@
         const privacyModal = document.getElementById('privacy-modal');
         const closePrivacyModalBtn = document.getElementById('close-privacy-modal-btn');
 
-        // === NEW: 숫자 및 연락처 유효성 검사 로직 개선 ===
+        // === FIX: 숫자 유효성 검사 로직 개선 ===
         /**
-         * 입력 필드에 숫자만 남도록 강제하는 함수.
-         * 사용자가 문자를 입력하면, 마지막으로 유효했던 숫자 값으로 되돌려 입력값이 지워지는 현상을 방지합니다.
+         * 입력 필드에 숫자만 남도록 강제하는 더 안정적인 함수.
+         * 입력할 때마다 숫자가 아닌 문자를 즉시 제거합니다.
          * @param {HTMLInputElement} inputEl - 적용할 input 요소
          */
-        const enforceNumeric = (inputEl) => {
-            inputEl.type = 'text';
-            let lastValidValue = inputEl.value || '';
-
-            inputEl.addEventListener('input', () => {
-                const currentValue = inputEl.value;
-                if (/^[0-9]*$/.test(currentValue)) {
-                    // 현재 값이 유효하면(숫자로만 이루어져 있으면), 마지막 유효값을 업데이트합니다.
-                    lastValidValue = currentValue;
-                } else {
-                    // 유효하지 않으면(문자 등이 포함되면), 마지막 유효값으로 되돌립니다.
-                    inputEl.value = lastValidValue;
-                }
+        const enforceNumericSimple = (inputEl) => {
+            inputEl.type = 'text'; // 모바일 호환성을 위해 text 타입 유지
+            inputEl.addEventListener('input', (e) => {
+                e.target.value = e.target.value.replace(/[^0-9]/g, '');
             });
         };
 
-        // '평수'와 '매매가'에 새로운 숫자 규칙 적용
-        enforceNumeric(pyeongInput);
-        enforceNumeric(priceInput);
+        // '평수'와 '매매가'에 개선된 숫자 규칙 적용
+        enforceNumericSimple(pyeongInput);
+        enforceNumericSimple(priceInput);
         
         // '연락처' 필드에 대한 규칙은 기존의 안정적인 로직을 유지합니다.
         contactInput.type = 'text';
