@@ -1,4 +1,4 @@
-/*
+\/*
  * 파일 이름: netlify/functions/get-realtors.js
  * 이 코드는 Airtable 및 Netlify 설정을 최종 점검하기 위한 체크리스트 역할을 합니다.
  * 아래 주석의 내용을 보시고, 사용자님의 실제 설정과 다른 부분이 없는지 마지막으로 확인해주세요.
