@@ -1,12 +1,12 @@
 <!-- 파일 이름: register.html -->
-<!-- '동' 드롭다운 동적 생성 오류를 수정한 최종 버전입니다. -->
+<!-- '동' 선택 시 조회 오류를 수정한 최종 버전입니다. -->
 <!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>홈퀵 - 매물 등록</title>
-    <!-- SDK 및 라이브러리 -->
+    <!-- SDK 및 라이브러리 (이전과 동일) -->
     <script src="https://js.tosspayments.com/v1/payment-widget"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -16,8 +16,11 @@
     <style>
         body { font-family: 'Noto Sans KR', sans-serif; background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); }
         .form-input:focus { border-color: #4f46e5; box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.2); outline: none; }
+        .modal-backdrop { background-color: rgba(0, 0, 0, 0.6); }
         .loader { border: 2px solid #f3f3f3; border-top: 2px solid #4f46e5; border-radius: 50%; width: 16px; height: 16px; animation: spin 1s linear infinite; }
+        .form-loader { border: 4px solid #f3f3f3; border-top: 4px solid #4f46e5; border-radius: 50%; width: 24px; height: 24px; animation: spin 2s linear infinite; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        .modal-content { transition: transform 0.3s ease-out, opacity 0.3s ease-out; }
     </style>
 </head>
 <body class="min-h-screen flex items-center justify-center p-4">
@@ -70,7 +73,6 @@
         const dongSelect = document.getElementById('dong');
         const districtInfo = document.getElementById('district-info');
         
-        // FIX: 누락되었던 동(dong) 데이터를 완벽하게 복원합니다.
         const dongData = {
             '강남구': ['신사동', '논현동', '압구정동', '청담동', '삼성동', '대치동', '역삼동', '도곡동', '개포동', '일원동', '수서동', '세곡동'],
             '강동구': ['강일동', '상일동', '명일동', '고덕동', '암사동', '천호동', '성내동', '길동', '둔촌동'],
@@ -123,6 +125,7 @@
             districtInfo.innerHTML = '';
         });
         
+        // FIX: '동' 드롭다운의 이벤트 리스너를 'blur'에서 'change'로 수정
         dongSelect.addEventListener('change', async (e) => {
              const dong = e.target.value;
              const district = districtSelect.value;
