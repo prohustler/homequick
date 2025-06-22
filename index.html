@@ -1,328 +1,87 @@
-<!-- 파일 이름: index.html -->
-<!-- 모든 기능이 포함되고 오류가 수정된 최종 버전입니다. -->
+<!-- 파일 이름: index.html (이 코드를 index.html 파일에 덮어쓰세요) -->
 <!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>홈퀵 - 최종본</title>
-    <!-- 토스페이먼츠 SDK -->
-    <script src="https://js.tosspayments.com/v1/payment-widget"></script>
+    <title>홈퀵: 내 집, 가장 스마트하게 내놓는 방법</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
     <style>
-        body { 
-            font-family: 'Noto Sans KR', sans-serif; 
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        body { font-family: 'Noto Sans KR', sans-serif; background-color: #ffffff; -webkit-font-smoothing: antialiased; }
+        .landing-hero { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; }
+        .landing-container { max-width: 1080px; margin: 0 auto; width: 100%; box-sizing: border-box; padding: 0 20px; }
+        .landing-section { padding: 80px 0; }
+        .section-title { font-size: 2.25rem; font-weight: 900; color: #1f2937; text-align: center; margin-bottom: 4rem; display: flex; align-items: center; justify-content: center; gap: 0.5rem; }
+        .cta-button {
+            display: inline-block;
+            background-color: #ff7e36; color: white; padding: 16px 32px; text-decoration: none;
+            border-radius: 8px; font-size: 1.125rem; font-weight: 700;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 126, 54, 0.4);
         }
-        .form-input:focus { border-color: #3b82f6; box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2); outline: none; }
-        .modal-backdrop { background-color: rgba(0, 0, 0, 0.5); }
-        .loader { border: 2px solid #f3f3f3; border-top: 2px solid #3498db; border-radius: 50%; width: 16px; height: 16px; animation: spin 1s linear infinite; }
-        .form-loader { border: 4px solid #f3f3f3; border-top: 4px solid #3498db; border-radius: 50%; width: 24px; height: 24px; animation: spin 2s linear infinite; }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        .modal-content { transition: transform 0.3s ease-out, opacity 0.3s ease-out; }
+        .cta-button:hover { background-color: #ff6a13; transform: translateY(-3px); box-shadow: 0 6px 20px rgba(255, 126, 54, 0.5); }
+        .card { background: white; border-radius: 12px; padding: 2rem; box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); }
     </style>
 </head>
-<body class="min-h-screen flex items-center justify-center p-4">
-
-    <!-- 메인 컨테이너 -->
-    <div class="w-full max-w-2xl bg-white rounded-2xl shadow-2xl p-6 md:p-10">
-        
-        <!-- 헤더 -->
-        <div class="text-center mb-8">
-            <h1 class="text-3xl md:text-4xl font-bold text-gray-800">🏠 홈퀵</h1>
-            <p class="text-gray-500 mt-2 text-md md:text-lg">내 집 팔기, 가장 빠르고 간편하게</p>
+<body class="bg-white">
+    <header class="landing-hero py-20 text-center">
+        <div class="landing-container">
+            <h1 class="text-4xl md:text-6xl font-black mb-4 leading-tight">🚀 홈퀵: 내 집, 가장 스마트하게 내놓는 방법</h1>
+            <p class="text-lg text-indigo-100 max-w-3xl mx-auto mb-8">"발품 없이, 전화 없이, 스마트하게 내 매물을 알리고 싶다면?" 홈퀵은 번거로운 부동산 방문과 반복 설명을 없애고, 단 한 번의 클릭으로 내 매물을 수십, 수백 개 부동산에 즉시 알려줍니다.</p>
+            <div class="bg-white p-8 rounded-xl shadow-2xl max-w-2xl mx-auto text-left">
+                <p class="text-gray-700 font-medium mb-4 text-center">지금 바로 간편하게 매물을 등록하고, 무료 발송 혜택을 받아보세요!</p>
+                <!-- FIX: 매물 등록 페이지(register.html)로 이동하는 링크로 수정 -->
+                <a href="./register.html" class="cta-button w-full text-center">지금 내 매물 등록하고 무료 발송 시작하기</a>
+                <p class="text-sm text-gray-500 mt-2 text-center">첫 1회 발송 무료 혜택!</p>
+            </div>
         </div>
-
-        <!-- 입력 폼 -->
-        <form id="property-form">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-y-5 gap-x-6">
-                <div class="md:col-span-2">
-                    <label for="title" class="block text-sm font-medium text-gray-700 mb-1">매물 제목</label>
-                    <input type="text" id="title" name="title" maxlength="40" class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg transition" placeholder="예) 강남역 5분 거리, 신축급 오피스텔 급매" required>
-                    <div class="text-right text-sm text-gray-500 mt-1">
-                        <span id="title-char-count">0</span> / 40
-                    </div>
-                </div>
-                <div>
-                    <label for="city" class="block text-sm font-medium text-gray-700 mb-1">지역 (시/도)</label>
-                    <select id="city" name="city" class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg transition bg-white" required>
-                        <option>서울특별시</option>
-                    </select>
-                </div>
-                <div>
-                    <label for="district" class="block text-sm font-medium text-gray-700 mb-1">지역 (시/구)</label>
-                    <select id="district" name="district" class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg transition bg-white" required>
-                        <option value="">구를 선택하세요</option>
-                        <option>강남구</option><option>강동구</option><option>강북구</option><option>강서구</option><option>관악구</option><option>광진구</option><option>구로구</option><option>금천구</option><option>노원구</option><option>도봉구</option><option>동대문구</option><option>동작구</option><option>마포구</option><option>서대문구</option><option>서초구</option><option>성동구</option><option>성북구</option><option>송파구</option><option>양천구</option><option>영등포구</option><option>용산구</option><option>은평구</option><option>종로구</option><option>중구</option><option>중랑구</option>
-                    </select>
-                    <div id="district-info" class="mt-2 text-sm text-gray-600 h-5 flex items-center hidden"></div>
-                </div>
-                <div>
-                    <label for="pyeong" class="block text-sm font-medium text-gray-700 mb-1">평수</label>
-                    <input type="text" id="pyeong" name="pyeong" class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg transition" placeholder="예) 25" required>
-                </div>
-                <div>
-                    <label for="price" class="block text-sm font-medium text-gray-700 mb-1">매매가 (만원)</label>
-                    <input type="text" id="price" name="price" class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg transition" placeholder="예) 80000" required>
-                </div>
-                <div class="md:col-span-2">
-                    <label for="contact" class="block text-sm font-medium text-gray-700 mb-1">회신 받을 연락처</label>
-                    <input type="text" id="contact" name="contact" maxlength="11" class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg transition" placeholder="'-' 없이 숫자만 입력하세요" value="010" required>
+    </header>
+    <main>
+        <section id="problem" class="bg-gray-50 landing-section">
+            <div class="landing-container">
+                <h2 class="section-title"><span class="text-red-500">🚨</span>집 내놓기, 왜 이렇게 어렵고 복잡할까요?</h2>
+                <div class="grid md:grid-cols-3 gap-8 text-center">
+                    <div class="card"><h3 class="font-bold text-xl mb-2 text-gray-800">시간 낭비!</h3><p class="text-gray-600">여러 부동산에 매번 방문하거나 전화로 똑같은 설명을 반복해야 하는 번거로움에 지치셨나요?</p></div>
+                    <div class="card"><h3 class="font-bold text-xl mb-2 text-gray-800">제한된 기회!</h3><p class="text-gray-600">몇 군데 부동산에만 내놓으면 내 매물이 제대로 홍보되지 않아 좋은 거래 기회를 놓치기 쉽습니다.</p></div>
+                    <div class="card"><h3 class="font-bold text-xl mb-2 text-gray-800">심리적 부담!</h3><p class="text-gray-600">복잡한 과정 때문에 매도 시점을 놓치거나, 원치 않는 조급함에 시달리기도 합니다.</p></div>
                 </div>
             </div>
-            <div class="mt-6 flex items-start">
-                <div class="flex items-center h-5">
-                    <input id="agreement" name="agreement" type="checkbox" class="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300 rounded" required>
-                </div>
-                <div class="ml-3 text-sm">
-                    <label for="agreement" class="text-gray-600">
-                        <span id="privacy-policy-link" class="underline cursor-pointer hover:text-blue-700">개인정보 수집 및 이용 동의</span>
-                    </label>
+        </section>
+        <section id="solution" class="bg-white landing-section">
+            <div class="landing-container">
+                <h2 class="section-title"><span class="text-green-500">✨</span>홈퀵이 당신의 집 내놓기를 간편하고 빠르게 만듭니다.</h2>
+                <div class="grid md:grid-cols-3 gap-8 text-center">
+                     <div class="card border-t-4 border-indigo-500"><div class="text-3xl font-black text-indigo-500 mb-4">1</div><h3 class="font-bold text-xl mb-2 text-gray-800">1분 만에 매물 정보 입력</h3><p class="text-gray-600">간단한 폼에 필수 정보만 입력하면 끝! 번거로운 추가 서류는 필요 없어요.</p></div>
+                     <div class="card border-t-4 border-indigo-500"><div class="text-3xl font-black text-indigo-500 mb-4">2</div><h3 class="font-bold text-xl mb-2 text-gray-800">클릭 한 번으로 동시 발송</h3><p class="text-gray-600">내 매물 주변의 수십, 수백 개 부동산에 SMS로 내 집 정보를 한 번에 발송합니다.</p></div>
+                     <div class="card border-t-4 border-indigo-500"><div class="text-3xl font-black text-indigo-500 mb-4">3</div><h3 class="font-bold text-xl mb-2 text-gray-800">관심 부동산 연락 기다리기</h3><p class="text-gray-600">내 매물에 관심 있는 부동산에서 직접 연락을 드릴 거예요. 기다리기만 하면 끝!</p></div>
                 </div>
             </div>
-            <div class="mt-8">
-                <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-4 rounded-lg transition duration-300 flex items-center justify-center">
-                    <span id="submit-btn-text">문자 내용 확인하고 발송하기</span>
-                    <div id="submit-loader" class="form-loader hidden"></div>
-                </button>
-            </div>
-        </form>
-    </div>
-
-    <!-- 결제/확인 모달 -->
-    <div id="modal-container" class="fixed inset-0 z-50 items-center justify-center hidden"></div>
-    
-    <!-- 개인정보 처리방침 모달 -->
-    <div id="privacy-modal" class="fixed inset-0 z-50 flex-col bg-gray-100 hidden">
-        <!-- 내용이 동적으로 채워집니다 -->
-    </div>
-
-    <script>
-        // --- 상수 및 변수 선언 ---
-        const TOSS_TEST_CLIENT_KEY = "test_ck_D5GePWvyJnrK0W0k6q8gLzN97Eoq";
-        let paymentWidget;
-        
-        if (TOSS_TEST_CLIENT_KEY) {
-            paymentWidget = PaymentWidget(TOSS_TEST_CLIENT_KEY, PaymentWidget.ANONYMOUS);
-        } else {
-            console.error("토스페이먼츠 클라이언트 키가 설정되지 않았습니다.");
-        }
-
-        const form = document.getElementById('property-form');
-        const modalContainer = document.getElementById('modal-container');
-        const contactInput = document.getElementById('contact');
-        
-        // --- 유효성 검사 로직 ---
-        const enforceNumericSimple = (inputEl) => {
-            inputEl.addEventListener('input', (e) => {
-                e.target.value = e.target.value.replace(/[^0-9]/g, '');
-            });
-        };
-        enforceNumericSimple(document.getElementById('pyeong'));
-        enforceNumericSimple(document.getElementById('price'));
-        
-        enforceNumericSimple(contactInput);
-        contactInput.addEventListener('keydown', (e) => {
-            if ((e.key === 'Backspace' || e.key === 'Delete') && e.target.selectionStart < 3) {
-                e.preventDefault();
-            }
-        });
-        contactInput.addEventListener('input', (e) => {
-            if (!e.target.value.startsWith('010')) {
-                e.target.value = '010';
-            }
-        });
-
-        document.getElementById('title').addEventListener('input', (e) => {
-            document.getElementById('title-char-count').textContent = e.target.value.length;
-        });
-        
-        // --- 이벤트 리스너 ---
-        document.getElementById('district').addEventListener('change', async (e) => {
-            const districtInfo = document.getElementById('district-info');
-            const district = e.target.value;
-            if (!district) {
-                districtInfo.innerHTML = '';
-                districtInfo.classList.add('hidden');
-                return;
-            }
-            districtInfo.classList.remove('hidden');
-            districtInfo.innerHTML = `<div class="loader"></div><span class="ml-2">부동산 정보 조회 중...</span>`;
-            try {
-                const city = document.getElementById('city').value;
-                const response = await fetch(`/.netlify/functions/get-realtors?city=${encodeURIComponent(city)}&district=${encodeURIComponent(district)}`);
-                if (!response.ok) throw new Error('Server error');
-                const data = await response.json();
-                if (data.count > 0) {
-                    districtInfo.innerHTML = `✅ <span class="ml-2 text-blue-600 font-semibold">${data.count}개</span> 부동산에 발송할 수 있어요.`;
-                } else {
-                    districtInfo.innerHTML = `⚠️ <span class="ml-2 text-red-600 font-semibold">해당 지역에 등록된 부동산이 없어요.</span>`;
-                }
-            } catch (error) {
-                districtInfo.innerHTML = `❌ <span class="ml-2">정보를 불러오지 못했어요.</span>`;
-            }
-        });
-
-        form.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            if (contactInput.value.length !== 11) {
-                alert('올바른 11자리 휴대폰 번호를 입력해주세요.');
-                contactInput.focus();
-                return;
-            }
-
-            const submitBtnText = document.getElementById('submit-btn-text');
-            const submitLoader = document.getElementById('submit-loader');
-            submitBtnText.classList.add('hidden');
-            submitLoader.classList.remove('hidden');
-            form.querySelector('button[type="submit"]').disabled = true;
-
-            const formData = new FormData(form);
-            const data = Object.fromEntries(formData.entries());
-
-            try {
-                const response = await fetch(`/.netlify/functions/get-realtors?city=${encodeURIComponent(data.city)}&district=${encodeURIComponent(data.district)}`);
-                if (!response.ok) throw new Error();
-                const realtorData = await response.json();
-                
-                showConfirmationModal(data, realtorData.count);
-
-            } catch (error) {
-                alert("오류가 발생했습니다. 잠시 후 다시 시도해주세요.");
-            } finally {
-                submitBtnText.classList.remove('hidden');
-                submitLoader.classList.add('hidden');
-                form.querySelector('button[type="submit"]').disabled = false;
-            }
-        });
-
-        // --- 모달 제어 함수 ---
-        function showModal(content) {
-            modalContainer.innerHTML = content;
-            modalContainer.classList.remove('hidden');
-            modalContainer.classList.add('flex');
-            requestAnimationFrame(() => {
-                const modalContent = modalContainer.querySelector('.modal-content');
-                if (modalContent) modalContent.classList.remove('scale-95', 'opacity-0');
-            });
-            modalContainer.querySelectorAll('[data-action="close"]').forEach(btn => btn.addEventListener('click', hideModal));
-            modalContainer.querySelector('.modal-backdrop').addEventListener('click', hideModal);
-        }
-
-        function hideModal() {
-            const modalContent = modalContainer.querySelector('.modal-content');
-            if (modalContent) {
-                 modalContent.classList.add('scale-95', 'opacity-0');
-                 modalContent.addEventListener('transitionend', () => {
-                    modalContainer.classList.add('hidden');
-                    modalContainer.classList.remove('flex');
-                    modalContainer.innerHTML = '';
-                }, { once: true });
-            } else {
-                 modalContainer.classList.add('hidden');
-                 modalContainer.classList.remove('flex');
-                 modalContainer.innerHTML = '';
-            }
-        }
-        
-        // --- 동적 모달 내용 생성 ---
-        function showConfirmationModal(data, count) {
-            const area_m2 = (parseFloat(data.pyeong) * 3.3058).toFixed(1);
-            let priceText;
-            const priceInTenThousand = parseInt(data.price, 10);
-            if (priceInTenThousand >= 10000) {
-                const eok = Math.floor(priceInTenThousand / 10000);
-                const man = priceInTenThousand % 10000;
-                priceText = `${eok}억`;
-                if (man > 0) priceText += ` ${man.toLocaleString()}만원`;
-            } else {
-                priceText = `${priceInTenThousand.toLocaleString()}만원`;
-            }
-            const smsContent = `[신규 매물 접수]\n\n- 제목: ${data.title}\n- 지역: ${data.city} ${data.district}\n- 면적: ${data.pyeong}평 (${area_m2}m²)\n- 가격: ${priceText}\n\n* 본 매물에 관심 있으시면 회신주세요.\n* 매도자 연락처: ${data.contact}`;
-            
-            const canPay = count > 0;
-
-            const modalHTML = `
-                <div class="modal-backdrop fixed inset-0"></div>
-                <div class="modal-content bg-white rounded-2xl shadow-2xl p-6 md:p-8 w-11/12 max-w-md mx-auto relative transform scale-95 opacity-0">
-                    <div id="payment-widget" class="mb-4"></div>
-                    <div id="agreement" class="text-xs"></div>
-                    <button id="payment-trigger-btn" class="w-full mt-4 bg-blue-600 text-white font-bold py-3 px-4 rounded-lg">3,000원 결제하기</button>
-                    <button data-action="close" class="w-full mt-2 bg-gray-200 text-gray-800 font-bold py-3 px-4 rounded-lg">취소</button>
+        </section>
+         <section id="why-homequick" class="bg-gray-50 landing-section">
+            <div class="landing-container">
+                <h2 class="section-title"><span class="text-yellow-500">🌟</span>홈퀵이 드리는 특별한 가치</h2>
+                <div class="grid md:grid-cols-2 gap-8">
+                     <div class="card flex items-start gap-4"><i class="fas fa-magic-wand-sparkles text-2xl text-yellow-500 mt-1"></i><div><h3 class="font-bold text-xl mb-1 text-gray-800">압도적인 간편함</h3><p class="text-gray-600 m-0">스마트폰으로 1분 안에 매물 등록, 10초 만에 SMS 발송!</p></div></div>
+                     <div class="card flex items-start gap-4"><i class="fas fa-satellite-dish text-2xl text-yellow-500 mt-1"></i><div><h3 class="font-bold text-xl mb-1 text-gray-800">최대 노출 효과</h3><p class="text-gray-600 m-0">원하는 지역의 수많은 부동산에 내 매물을 동시에 알려줍니다.</p></div></div>
+                     <div class="card flex items-start gap-4"><i class="fas fa-user-check text-2xl text-yellow-500 mt-1"></i><div><h3 class="font-bold text-xl mb-1 text-gray-800">진성 리드 확보</h3><p class="text-gray-600 m-0">내 매물에 정말 관심 있는 부동산에서만 연락이 오니, 불필요한 문의는 줄어듭니다.</p></div></div>
+                     <div class="card flex items-start gap-4"><i class="fas fa-bolt-lightning text-2xl text-yellow-500 mt-1"></i><div><h3 class="font-bold text-xl mb-1 text-gray-800">시간 절약 & 비용 효율</h3><p class="text-gray-600 m-0">일일이 발품 팔거나 전화할 필요 없이 가장 효율적으로 홍보하고, 첫 발송은 심지어 무료!</p></div></div>
                 </div>
-            `;
-            showModal(modalHTML);
-            
-            if (canPay) {
-                renderPaymentWidget(data);
-            } else {
-                modalContainer.querySelector('.modal-content').innerHTML = `
-                    <h2 class="text-2xl font-bold text-center text-gray-800 mb-4">⚠️ 알림</h2>
-                    <p class="text-center text-gray-600">'${data.district}'에는 등록 가능한 부동산이 없습니다. <br/>다른 지역을 선택해주세요.</p>
-                    <button data-action="close" class="w-full mt-8 bg-gray-200 text-gray-800 font-bold py-3 px-4 rounded-lg">확인</button>
-                `;
-            }
-        }
-        
-        // 결제 위젯 렌더링 및 결제 요청
-        async function renderPaymentWidget(leadData) {
-            if (!paymentWidget) return;
-            try {
-                await paymentWidget.renderPaymentMethods("#payment-widget", 3000);
-                await paymentWidget.renderAgreement("#agreement");
-                
-                document.getElementById('payment-trigger-btn').addEventListener('click', async () => {
-                     try {
-                        // 1. DB 저장
-                        const saveResponse = await fetch('/.netlify/functions/save-lead', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(leadData) });
-                        if (!saveResponse.ok) throw new Error('DB 저장 실패');
-                        
-                        // 2. 결제 요청
-                        const orderId = 'homequick_' + new Date().getTime();
-                        await paymentWidget.requestPayment({
-                            orderId: orderId,
-                            orderName: `홈퀵 ${leadData.district} 매물 홍보`,
-                            successUrl: `${window.location.origin}/success.html`,
-                            failUrl: `${window.location.origin}/fail.html`,
-                        });
-                    } catch (error) {
-                        alert(`처리 중 오류가 발생했습니다: ${error.message}`);
-                    }
-                });
-            } catch (error) {
-                 alert(`결제창을 여는 데 실패했습니다: ${error.message}`);
-            }
-        }
-        
-        // 개인정보 처리방침 모달
-        document.getElementById('privacy-policy-link').addEventListener('click', (e) => {
-            e.preventDefault();
-            const privacyModal = document.getElementById('privacy-modal');
-            privacyModal.innerHTML = `
-                <header class="w-full max-w-4xl mx-auto flex-shrink-0 bg-white border-b sticky top-0">
-                    <div class="flex justify-between items-center p-4">
-                        <h2 class="text-lg font-bold text-gray-900">개인정보 처리방침</h2>
-                        <button id="close-privacy-btn" class="text-gray-500 hover:text-gray-800">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path></svg>
-                        </button>
-                    </div>
-                </header>
-                <main class="w-full max-w-4xl mx-auto flex-grow overflow-y-auto bg-white">
-                    <div class="p-6 md:p-8 space-y-6 text-gray-700">
-                         <p class="text-sm leading-relaxed">홈퀵(이하 '회사'라 함)는 「개인정보 보호법」... (이하 내용 생략)</p>
-                         <!-- 여기에 전체 약관 내용이 들어갑니다 -->
-                    </div>
-                </main>
-            `;
-            privacyModal.classList.remove('hidden');
-            document.body.style.overflow = 'hidden';
-            document.getElementById('close-privacy-btn').addEventListener('click', () => {
-                privacyModal.classList.add('hidden');
-                privacyModal.innerHTML = '';
-                document.body.style.overflow = 'auto';
-            });
-        });
-    </script>
+            </div>
+        </section>
+        <section id="faq" class="bg-white landing-section">
+            <div class="landing-container max-w-4xl mx-auto">
+                 <h2 class="section-title"><span class="text-cyan-500">💬</span>궁금증을 해결해 드립니다</h2>
+                 <div class="space-y-4">
+                    <details class="group bg-gray-50 p-4 rounded-lg"><summary class="font-semibold cursor-pointer list-none flex justify-between items-center">Q: 홈퀵 서비스는 정말 무료인가요? <i class="fas fa-chevron-down group-open:rotate-180 transition-transform"></i></summary><div class="mt-4 text-gray-600"><p>A: 첫 매물 등록 시 1회 SMS 발송은 무료입니다. 이후 추가 발송 시 소정의 비용이 발생합니다.</p></div></details>
+                    <details class="group bg-gray-50 p-4 rounded-lg"><summary class="font-semibold cursor-pointer list-none flex justify-between items-center">Q: 어떤 지역의 부동산에 매물을 홍보할 수 있나요? <i class="fas fa-chevron-down group-open:rotate-180 transition-transform"></i></summary><div class="mt-4 text-gray-600"><p>A: 원하시는 지역을 설정하면 해당 지역 주변의 부동산 중개업소에 매물 정보를 발송해 드립니다.</p></div></details>
+                    <details class="group bg-gray-50 p-4 rounded-lg"><summary class="font-semibold cursor-pointer list-none flex justify-between items-center">Q: 내 개인 정보는 안전한가요? <i class="fas fa-chevron-down group-open:rotate-180 transition-transform"></i></summary><div class="mt-4 text-gray-600"><p>A: 홈퀵은 고객님의 소중한 개인 정보를 철저하게 암호화하고 보호합니다. <a href="./privacy.html" target="_blank" class="text-blue-600 underline">개인정보처리방침</a>을 확인해주세요.</p></div></details>
+                 </div>
+            </div>
+        </section>
+    </main>
 </body>
 </html>
