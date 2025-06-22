@@ -1,16 +1,17 @@
 /*
  * 파일 이름: netlify/functions/get-realtors.js
- * '동'이 선택 사항일 경우를 처리하도록 필터링 로직이 개선된 최종 버전입니다.
+ * '동' 단위 검색 기능이 명확하게 수정된 최종 버전입니다.
+ * 이 코드가 register.html과 함께 작동하는 최종 서버 코드입니다.
  */
 exports.handler = async function(event) {
-  // Netlify 환경 변수에서 Airtable 접속 정보를 가져옵니다.
+  // 1. Netlify 환경 변수에서 Airtable 접속 정보를 안전하게 가져옵니다.
   const { AIRTABLE_PERSONAL_TOKEN, AIRTABLE_BASE_ID } = process.env;
   const AIRTABLE_TABLE_NAME = 'Realtors'; // Airtable에 설정된 테이블 이름
 
-  // 클라이언트에서 보낸 'city', 'district', 'dong' 파라미터를 추출합니다.
-  const { city, district, dong } = event.queryStringParameters;
+  // 2. 웹사이트에서 보낸 'district'(구)와 'dong'(동) 정보를 추출합니다.
+  const { district, dong } = event.queryStringParameters;
   
-  // 'district'는 필수 값이므로, 없으면 에러를 반환합니다.
+  // 3. 'district'(구) 정보는 필수이므로, 없으면 에러를 반환합니다.
   if (!district) {
       return {
           statusCode: 400,
@@ -18,46 +19,46 @@ exports.handler = async function(event) {
       };
   }
 
-  // '동' 정보 유무에 따라 필터링 공식을 동적으로 생성합니다.
+  // 4. *** 핵심 검색 로직 ***
+  // 'dong'(동) 정보의 유무에 따라 Airtable에 보낼 검색 조건을 다르게 만듭니다.
   let filterFormula;
-  if (dong) {
-    // '동'이 입력된 경우: '구'와 '동'을 모두 만족하는 데이터를 찾습니다.
+
+  // 4-1. 만약 사용자가 '동'까지 입력했다면 (dong 파라미터에 값이 있다면)
+  if (dong && dong.trim() !== '') {
+    // "District 필드가 사용자가 선택한 '구'와 같고(AND), Dong 필드도 사용자가 입력한 '동'과 같은" 데이터를 찾아달라고 요청합니다.
     filterFormula = `AND({District} = "${district}", {Dong} = "${dong}")`;
   } else {
-    // '동'이 입력되지 않은 경우: '구'만 만족하는 데이터를 찾습니다.
+    // 4-2. 만약 사용자가 '구'까지만 선택했다면 (dong 파라미터가 비어 있다면)
+    // "District 필드가 사용자가 선택한 '구'와 같은" 데이터만 찾아달라고 요청합니다.
     filterFormula = `{District} = "${district}"`;
   }
 
-  // Airtable API에 요청할 최종 URL을 만듭니다.
+  // 5. 위에서 만든 검색 조건(filterFormula)을 포함하여 최종 API 요청 주소를 생성합니다.
   const url = `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${encodeURIComponent(AIRTABLE_TABLE_NAME)}?filterByFormula=${encodeURIComponent(filterFormula)}`;
   
   // 'node-fetch' 라이브러리를 가져옵니다.
   const fetch = (await import('node-fetch')).default;
 
   try {
-    // Airtable 서버에 데이터를 요청합니다.
+    // 6. Airtable 서버에 데이터를 요청합니다.
     const response = await fetch(url, {
       headers: { 
         'Authorization': `Bearer ${AIRTABLE_PERSONAL_TOKEN}`
       },
     });
 
-    // Airtable로부터 받은 응답이 정상이 아닐 경우 에러를 처리합니다.
+    // 7. Airtable로부터 받은 응답이 정상이 아닐 경우 에러를 처리합니다.
     if (!response.ok) {
       const errorBody = await response.text();
       console.error(`Airtable API Error: ${response.statusText}`, errorBody);
-      return { 
-        statusCode: response.status, 
-        body: JSON.stringify({ error: `Airtable API Error: ${response.statusText}` }) 
-      };
+      throw new Error(`Airtable API Error: ${response.status}`);
     }
 
-    // 응답받은 데이터를 JSON 형태로 변환합니다.
+    // 8. 성공적으로 응답을 받으면, 받은 데이터에서 부동산 개수를 계산합니다.
     const data = await response.json();
-    // 찾아낸 부동산의 총 개수를 계산합니다.
     const count = data.records.length;
 
-    // 성공적으로 처리되었으면, 부동산 개수를 담아 클라이언트에 응답합니다.
+    // 9. 계산된 부동산 개수를 웹사이트에 전달합니다.
     return { 
       statusCode: 200, 
       body: JSON.stringify({ count: count }) 
@@ -65,7 +66,7 @@ exports.handler = async function(event) {
 
   } catch (error) {
     // 함수 실행 중 예측하지 못한 오류가 발생하면 에러를 처리합니다.
-    console.error('Function execution error:', error);
+    console.error('Function execution error:', error.message);
     return { 
       statusCode: 500, 
       body: JSON.stringify({ error: 'Function execution error.' }) 
