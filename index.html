@@ -1,3 +1,4 @@
+<!-- 파일 이름: index.html (이 코드를 index.html 파일에 덮어쓰세요) -->Add commentMore actions
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -18,6 +19,20 @@
         .form-input:focus { border-color: #4f46e5; box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.2); outline: none; }
         .loader { border: 2px solid #f3f3f3; border-top: 2px solid #4f46e5; border-radius: 50%; width: 16px; height: 16px; animation: spin 1s linear infinite; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        body { font-family: 'Noto Sans KR', sans-serif; background-color: #ffffff; -webkit-font-smoothing: antialiased; }
+        .landing-hero { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; }
+        .landing-container { max-width: 1080px; margin: 0 auto; width: 100%; box-sizing: border-box; padding: 0 20px; }
+        .landing-section { padding: 80px 0; }
+        .section-title { font-size: 2.25rem; font-weight: 900; color: #1f2937; text-align: center; margin-bottom: 4rem; display: flex; align-items: center; justify-content: center; gap: 0.5rem; }
+        .cta-button {
+            display: inline-block;
+            background-color: #ff7e36; color: white; padding: 16px 32px; text-decoration: none;
+            border-radius: 8px; font-size: 1.125rem; font-weight: 700;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 126, 54, 0.4);
+        }
+        .cta-button:hover { background-color: #ff6a13; transform: translateY(-3px); box-shadow: 0 6px 20px rgba(255, 126, 54, 0.5); }
+        .card { background: white; border-radius: 12px; padding: 2rem; box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); }
     </style>
 </head>
 <body class="bg-white">
@@ -28,12 +43,32 @@
     <div id="landing-view">
         <header class="py-20 text-center text-white" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
             <div class="max-w-4xl mx-auto px-4">
-                <h1 class="text-4xl md:text-5xl font-black mb-4 leading-tight">🚀 홈퀵: 내 집, 가장 스마트하게 내놓는 방법</h1>
+                <h1 class="text-4xl md:text-5xl font-black mb-4 leading-tight">� 홈퀵: 내 집, 가장 스마트하게 내놓는 방법</h1>
                 <p class="text-lg text-indigo-100 max-w-3xl mx-auto mb-8">"발품 없이, 전화 없이, 스마트하게!" 홈퀵은 번거로운 부동산 방문과 반복 설명을 없애고, 단 한 번의 클릭으로 내 매물을 수십, 수백 개 부동산에 즉시 알려줍니다.</p>
                 <div class="bg-white p-8 rounded-xl shadow-2xl max-w-2xl mx-auto text-center">
                     <p class="text-gray-700 font-medium mb-4">지금 바로 간편하게 매물을 등록하고, 무료 발송 혜택을 받아보세요!</p>
                     <a href="#" id="start-app-btn" class="w-full inline-block text-white font-bold py-4 px-6 rounded-lg transition-all duration-300 ease-in-out" style="background-color: #ff7e36; box-shadow: 0 4px 15px rgba(255, 126, 54, 0.4);">지금 내 매물 등록하고 무료 발송 시작하기</a>
                     <p class="text-sm text-gray-500 mt-2">첫 1회 발송 무료 혜택!</p>
+    <header class="landing-hero py-20 text-center">
+        <div class="landing-container">
+            <h1 class="text-4xl md:text-6xl font-black mb-4 leading-tight">🚀 홈퀵: 내 집, 가장 스마트하게 내놓는 방법</h1>
+            <p class="text-lg text-indigo-100 max-w-3xl mx-auto mb-8">"발품 없이, 전화 없이, 스마트하게 내 매물을 알리고 싶다면?" 홈퀵은 번거로운 부동산 방문과 반복 설명을 없애고, 단 한 번의 클릭으로 내 매물을 수십, 수백 개 부동산에 즉시 알려줍니다.</p>
+            <div class="bg-white p-8 rounded-xl shadow-2xl max-w-2xl mx-auto text-left">
+                <p class="text-gray-700 font-medium mb-4 text-center">지금 바로 간편하게 매물을 등록하고, 무료 발송 혜택을 받아보세요!</p>
+                <!-- FIX: 매물 등록 페이지(register.html)로 이동하는 링크로 수정 -->
+                <a href="./register.html" class="cta-button w-full text-center">지금 내 매물 등록하고 무료 발송 시작하기</a>
+                <p class="text-sm text-gray-500 mt-2 text-center">첫 1회 발송 무료 혜택!</p>
+            </div>
+        </div>
+    </header>
+    <main>
+        <section id="problem" class="bg-gray-50 landing-section">
+            <div class="landing-container">
+                <h2 class="section-title"><span class="text-red-500">🚨</span>집 내놓기, 왜 이렇게 어렵고 복잡할까요?</h2>
+                <div class="grid md:grid-cols-3 gap-8 text-center">
+                    <div class="card"><h3 class="font-bold text-xl mb-2 text-gray-800">시간 낭비!</h3><p class="text-gray-600">여러 부동산에 매번 방문하거나 전화로 똑같은 설명을 반복해야 하는 번거로움에 지치셨나요?</p></div>
+                    <div class="card"><h3 class="font-bold text-xl mb-2 text-gray-800">제한된 기회!</h3><p class="text-gray-600">몇 군데 부동산에만 내놓으면 내 매물이 제대로 홍보되지 않아 좋은 거래 기회를 놓치기 쉽습니다.</p></div>
+                    <div class="card"><h3 class="font-bold text-xl mb-2 text-gray-800">심리적 부담!</h3><p class="text-gray-600">복잡한 과정 때문에 매도 시점을 놓치거나, 원치 않는 조급함에 시달리기도 합니다.</p></div>
                 </div>
             </div>
         </header>
@@ -62,6 +97,15 @@
             <div class="text-center mb-8">
                 <h1 class="text-3xl md:text-4xl font-bold text-gray-800">🏠 매물 정보 등록</h1>
                 <p class="text-gray-500 mt-2 text-md md:text-lg">아래 정보를 입력하시면 주변 부동산에 홍보됩니다.</p>
+        </section>
+        <section id="solution" class="bg-white landing-section">
+            <div class="landing-container">
+                <h2 class="section-title"><span class="text-green-500">✨</span>홈퀵이 당신의 집 내놓기를 간편하고 빠르게 만듭니다.</h2>
+                <div class="grid md:grid-cols-3 gap-8 text-center">
+                     <div class="card border-t-4 border-indigo-500"><div class="text-3xl font-black text-indigo-500 mb-4">1</div><h3 class="font-bold text-xl mb-2 text-gray-800">1분 만에 매물 정보 입력</h3><p class="text-gray-600">간단한 폼에 필수 정보만 입력하면 끝! 번거로운 추가 서류는 필요 없어요.</p></div>
+                     <div class="card border-t-4 border-indigo-500"><div class="text-3xl font-black text-indigo-500 mb-4">2</div><h3 class="font-bold text-xl mb-2 text-gray-800">클릭 한 번으로 동시 발송</h3><p class="text-gray-600">내 매물 주변의 수십, 수백 개 부동산에 SMS로 내 집 정보를 한 번에 발송합니다.</p></div>
+                     <div class="card border-t-4 border-indigo-500"><div class="text-3xl font-black text-indigo-500 mb-4">3</div><h3 class="font-bold text-xl mb-2 text-gray-800">관심 부동산 연락 기다리기</h3><p class="text-gray-600">내 매물에 관심 있는 부동산에서 직접 연락을 드릴 거예요. 기다리기만 하면 끝!</p></div>
+                </div>
             </div>
             <form id="property-form">
                 <div class="grid grid-cols-1 gap-y-5">
@@ -77,6 +121,15 @@
                         <div><label for="price" class="block text-sm font-medium text-gray-700 mb-1">매매가 (만원)</label><input type="text" id="price" name="price" class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg transition" placeholder="예) 80,000" required></div>
                     </div>
                     <div><label for="contact" class="block text-sm font-medium text-gray-700 mb-1">회신 받을 연락처</label><input type="text" id="contact" name="contact" maxlength="11" class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg transition" placeholder="'-' 없이 숫자만 입력하세요" value="010" required></div>
+        </section>
+         <section id="why-homequick" class="bg-gray-50 landing-section">
+            <div class="landing-container">
+                <h2 class="section-title"><span class="text-yellow-500">🌟</span>홈퀵이 드리는 특별한 가치</h2>
+                <div class="grid md:grid-cols-2 gap-8">
+                     <div class="card flex items-start gap-4"><i class="fas fa-magic-wand-sparkles text-2xl text-yellow-500 mt-1"></i><div><h3 class="font-bold text-xl mb-1 text-gray-800">압도적인 간편함</h3><p class="text-gray-600 m-0">스마트폰으로 1분 안에 매물 등록, 10초 만에 SMS 발송!</p></div></div>
+                     <div class="card flex items-start gap-4"><i class="fas fa-satellite-dish text-2xl text-yellow-500 mt-1"></i><div><h3 class="font-bold text-xl mb-1 text-gray-800">최대 노출 효과</h3><p class="text-gray-600 m-0">원하는 지역의 수많은 부동산에 내 매물을 동시에 알려줍니다.</p></div></div>
+                     <div class="card flex items-start gap-4"><i class="fas fa-user-check text-2xl text-yellow-500 mt-1"></i><div><h3 class="font-bold text-xl mb-1 text-gray-800">진성 리드 확보</h3><p class="text-gray-600 m-0">내 매물에 정말 관심 있는 부동산에서만 연락이 오니, 불필요한 문의는 줄어듭니다.</p></div></div>
+                     <div class="card flex items-start gap-4"><i class="fas fa-bolt-lightning text-2xl text-yellow-500 mt-1"></i><div><h3 class="font-bold text-xl mb-1 text-gray-800">시간 절약 & 비용 효율</h3><p class="text-gray-600 m-0">일일이 발품 팔거나 전화할 필요 없이 가장 효율적으로 홍보하고, 첫 발송은 심지어 무료!</p></div></div>
                 </div>
                 <div class="mt-6 flex items-start"><div class="flex items-center h-5"><input id="agreement-checkbox" name="agreement" type="checkbox" class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded" required></div><div class="ml-3 text-sm"><label for="agreement-checkbox" class="text-gray-600"><span id="privacy-link" class="underline cursor-pointer hover:text-indigo-700">개인정보 수집 및 이용 동의</span></label></div></div>
                 <div class="mt-8"><button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-4 px-4 rounded-lg transition duration-300 flex items-center justify-center"><span id="submit-btn-text">문자 내용 확인하고 발송하기</span><div id="submit-loader" class="hidden ml-2 loader"></div></button></div>
@@ -89,37 +142,11 @@
 
     <script>
         // --- 전역 변수 및 초기화 ---
-        const TOSS_TEST_CLIENT_KEY = "test_ck_D5GePWvyJnrK0W0k6q8gLzN97Eoq";
-        let paymentWidget;
-        if (TOSS_TEST_CLIENT_KEY) {
-            paymentWidget = PaymentWidget(TOSS_TEST_CLIENT_KEY, PaymentWidget.ANONYMOUS);
-        }
-
-        const landingView = document.getElementById('landing-view');
-        const registerModal = document.getElementById('register-modal');
-        const startAppBtn = document.getElementById('start-app-btn');
-        const closeRegisterModalBtn = document.getElementById('close-register-modal-btn');
-        const registerModalBackdrop = document.getElementById('register-modal-backdrop');
-        const paymentModalContainer = document.getElementById('payment-modal-container');
         const form = document.getElementById('property-form');
         const pyeongInput = document.getElementById('pyeong');
         const priceInput = document.getElementById('price');
         const contactInput = document.getElementById('contact');
-        const districtSelect = document.getElementById('district');
-        const locationGrid = document.getElementById('location-grid');
-        const dongContainer = document.getElementById('dong-container');
-        const dongSelect = document.getElementById('dong');
-        const districtInfo = document.getElementById('district-info');
 
-        // --- 메인 뷰 <-> 등록 모달 뷰 전환 로직 ---
-        function showRegisterModal() { registerModal.classList.remove('hidden'); document.body.style.overflow = 'hidden'; }
-        function hideRegisterModal() { registerModal.classList.add('hidden'); document.body.style.overflow = 'auto'; }
-        startAppBtn.addEventListener('click', (e) => { e.preventDefault(); showRegisterModal(); });
-        closeRegisterModalBtn.addEventListener('click', hideRegisterModal);
-        registerModalBackdrop.addEventListener('click', hideRegisterModal);
-
-        // --- 여기서부터 매물등록 앱의 모든 JavaScript 로직 시작 ---
-        
         // === NEW: 개선된 입력값 검증 로직 ===
         
         /**
@@ -150,58 +177,54 @@
          */
         function formatPriceInput(e) {
             let value = e.target.value;
-            // 1. 콤마를 포함한 숫자 이외의 모든 문자 제거
+            // 1. 숫자 이외의 모든 문자 제거
             const numValue = value.replace(/[^0-9]/g, '');
             // 2. 최대 7자리 제한
             const truncatedValue = numValue.substring(0, 7);
-            // 3. 천 단위 콤마 추가 (값이 있을 때만)
-            if (truncatedValue) {
-                e.target.value = Number(truncatedValue).toLocaleString('ko-KR');
-            } else {
-                e.target.value = '';
+            // 3. 천 단위 콤마 추가
+            e.target.value = Number(truncatedValue).toLocaleString('ko-KR');
+        }
+
+        /**
+         * '연락처' 입력 필드 포맷팅 함수
+         * - 숫자만 허용
+         * - '010'으로 시작하도록 강제
+         */
+        function formatContactInput(e) {
+            let value = e.target.value.replace(/[^0-9]/g, '');
+            if (!value.startsWith('010')) {
+                value = '010';
             }
+            e.target.value = value;
         }
         
         // 각 필드에 새로운 이벤트 리스너 적용
         pyeongInput.addEventListener('input', formatPyeongInput);
         priceInput.addEventListener('input', formatPriceInput);
+        contactInput.addEventListener('input', formatContactInput);
 
-        // '연락처' 필드는 기존의 안정적인 로직 유지
-        const enforceNumericSimple = (inputEl) => { inputEl.addEventListener('input', (e) => { e.target.value = e.target.value.replace(/[^0-9]/g, ''); }); };
-        enforceNumericSimple(contactInput);
-        contactInput.addEventListener('keydown', (e) => { if ((e.key === 'Backspace' || e.key === 'Delete') && e.target.selectionStart < 3) e.preventDefault(); });
-        contactInput.addEventListener('input', (e) => { if (!e.target.value.startsWith('010')) e.target.value = '010'; });
-        // =================================================
-
-        // 제목 글자 수 카운터
-        document.getElementById('title').addEventListener('input', (e) => { document.getElementById('title-char-count').textContent = e.target.value.length; });
-        
-        // 동(dong) 데이터
-        const dongData = { /* ... 동 데이터 ... */ };
-        
-        // '구' 선택 시 '동' 드롭다운 동적 생성 및 UI 변경
-        districtSelect.addEventListener('change', () => {
-            dongSelect.innerHTML = '<option value="">동 선택 (선택)</option>';
-            const selectedGu = districtSelect.value;
-            if (selectedGu && dongData[selectedGu]) {
-                dongData[selectedGu].forEach(dongName => {
-                    const option = document.createElement('option');
-                    option.value = dongName;
-                    option.textContent = dongName;
-                    dongSelect.appendChild(option);
-                });
-                locationGrid.classList.remove('grid-cols-2');
-                locationGrid.classList.add('grid-cols-3');
-                dongContainer.classList.remove('hidden');
-            } else {
-                locationGrid.classList.remove('grid-cols-3');
-                locationGrid.classList.add('grid-cols-2');
-                dongContainer.classList.add('hidden');
+        // '010'이 지워지는 것을 방지하는 로직은 유지
+        contactInput.addEventListener('keydown', (e) => {
+            if ((e.key === 'Backspace' || e.key === 'Delete') && e.target.selectionStart < 3) {
+                e.preventDefault();
             }
-            districtInfo.classList.add('hidden');
         });
         
-        // ... (나머지 JS 코드)
+        // ... (나머지 JS 코드는 이전과 동일합니다) ...
+        
     </script>
+            </div>
+        </section>
+        <section id="faq" class="bg-white landing-section">
+            <div class="landing-container max-w-4xl mx-auto">
+                 <h2 class="section-title"><span class="text-cyan-500">💬</span>궁금증을 해결해 드립니다</h2>
+                 <div class="space-y-4">
+                    <details class="group bg-gray-50 p-4 rounded-lg"><summary class="font-semibold cursor-pointer list-none flex justify-between items-center">Q: 홈퀵 서비스는 정말 무료인가요? <i class="fas fa-chevron-down group-open:rotate-180 transition-transform"></i></summary><div class="mt-4 text-gray-600"><p>A: 첫 매물 등록 시 1회 SMS 발송은 무료입니다. 이후 추가 발송 시 소정의 비용이 발생합니다.</p></div></details>
+                    <details class="group bg-gray-50 p-4 rounded-lg"><summary class="font-semibold cursor-pointer list-none flex justify-between items-center">Q: 어떤 지역의 부동산에 매물을 홍보할 수 있나요? <i class="fas fa-chevron-down group-open:rotate-180 transition-transform"></i></summary><div class="mt-4 text-gray-600"><p>A: 원하시는 지역을 설정하면 해당 지역 주변의 부동산 중개업소에 매물 정보를 발송해 드립니다.</p></div></details>
+                    <details class="group bg-gray-50 p-4 rounded-lg"><summary class="font-semibold cursor-pointer list-none flex justify-between items-center">Q: 내 개인 정보는 안전한가요? <i class="fas fa-chevron-down group-open:rotate-180 transition-transform"></i></summary><div class="mt-4 text-gray-600"><p>A: 홈퀵은 고객님의 소중한 개인 정보를 철저하게 암호화하고 보호합니다. <a href="./privacy.html" target="_blank" class="text-blue-600 underline">개인정보처리방침</a>을 확인해주세요.</p></div></details>
+                 </div>
+            </div>
+        </section>
+    </main>
 </body>
 </html>
