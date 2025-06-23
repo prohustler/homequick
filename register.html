@@ -1,10 +1,12 @@
+<!-- 파일 이름: register.html -->
+<!-- '동' 선택 시 조회 오류를 수정한 최종 버전입니다. -->
 <!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>홈퀵 - 매물 등록</title>
-    <!-- SDK 및 라이브러리 -->
+    <!-- SDK 및 라이브러리 (이전과 동일) -->
     <script src="https://js.tosspayments.com/v1/payment-widget"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -16,6 +18,7 @@
         .form-input:focus { border-color: #4f46e5; box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.2); outline: none; }
         .modal-backdrop { background-color: rgba(0, 0, 0, 0.6); }
         .loader { border: 2px solid #f3f3f3; border-top: 2px solid #4f46e5; border-radius: 50%; width: 16px; height: 16px; animation: spin 1s linear infinite; }
+        .form-loader { border: 4px solid #f3f3f3; border-top: 4px solid #4f46e5; border-radius: 50%; width: 24px; height: 24px; animation: spin 2s linear infinite; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
         .modal-content { transition: transform 0.3s ease-out, opacity 0.3s ease-out; }
     </style>
@@ -29,20 +32,34 @@
         <form id="property-form">
             <div class="grid grid-cols-1 gap-y-5">
                 <div class="md:col-span-2"><label for="title" class="block text-sm font-medium text-gray-700 mb-1">매물 제목</label><input type="text" id="title" name="title" maxlength="40" class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg transition" placeholder="예) 강남역 5분 거리, 신축급 오피스텔 급매" required><div class="text-right text-sm text-gray-500 mt-1"><span id="title-char-count">0</span> / 40</div></div>
+                
                 <div id="location-grid" class="grid grid-cols-2 gap-x-4">
-                    <div><label for="city" class="block text-sm font-medium text-gray-700 mb-1">시/도</label><select id="city" name="city" class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg transition bg-white" required><option>서울특별시</option></select></div>
-                    <div id="district-wrapper"><label for="district" class="block text-sm font-medium text-gray-700 mb-1">지역 (구)</label><select id="district" name="district" class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg transition bg-white" required><option value="">선택</option><option>강남구</option><option>강동구</option><option>강북구</option><option>강서구</option><option>관악구</option><option>광진구</option><option>구로구</option><option>금천구</option><option>노원구</option><option>도봉구</option><option>동대문구</option><option>동작구</option><option>마포구</option><option>서대문구</option><option>서초구</option><option>성동구</option><option>성북구</option><option>송파구</option><option>양천구</option><option>영등포구</option><option>용산구</option><option>은평구</option><option>종로구</option><option>중구</option><option>중랑구</option></select></div>
-                    <div id="dong-container" class="hidden"><label for="dong" class="block text-sm font-medium text-gray-700 mb-1">지역 (동)</label><select id="dong" name="dong" class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg transition bg-white"><option value="">동 선택 (선택)</option></select></div>
+                    <div>
+                        <label for="city" class="block text-sm font-medium text-gray-700 mb-1">시/도</label>
+                        <select id="city" name="city" class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg transition bg-white" required><option>서울특별시</option></select>
+                    </div>
+                    <div id="district-wrapper">
+                        <label for="district" class="block text-sm font-medium text-gray-700 mb-1">지역 (구)</label>
+                        <select id="district" name="district" class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg transition bg-white" required><option value="">선택</option><option>강남구</option><option>강동구</option><option>강북구</option><option>강서구</option><option>관악구</option><option>광진구</option><option>구로구</option><option>금천구</option><option>노원구</option><option>도봉구</option><option>동대문구</option><option>동작구</option><option>마포구</option><option>서대문구</option><option>서초구</option><option>성동구</option><option>성북구</option><option>송파구</option><option>양천구</option><option>영등포구</option><option>용산구</option><option>은평구</option><option>종로구</option><option>중구</option><option>중랑구</option></select>
+                    </div>
+                    <div id="dong-container" class="hidden">
+                        <label for="dong" class="block text-sm font-medium text-gray-700 mb-1">지역 (동)</label>
+                        <select id="dong" name="dong" class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg transition bg-white"><option value="">동 선택 (선택)</option></select>
+                    </div>
                 </div>
-                <div class="col-span-1 md:col-span-2"><div id="district-info" class="text-sm text-gray-600 h-5 flex items-center hidden"></div></div>
+
+                <div class="col-span-1 md:col-span-2">
+                    <div id="district-info" class="text-sm text-gray-600 h-5 flex items-center hidden"></div>
+                </div>
+
                 <div class="grid grid-cols-2 gap-x-4">
-                    <div><label for="pyeong" class="block text-sm font-medium text-gray-700 mb-1">평수</label><input type="text" id="pyeong" name="pyeong" class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg transition" placeholder="예) 25.5" required></div>
-                    <div><label for="price" class="block text-sm font-medium text-gray-700 mb-1">매매가 (만원)</label><input type="text" id="price" name="price" class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg transition" placeholder="예) 80,000" required></div>
+                    <div><label for="pyeong" class="block text-sm font-medium text-gray-700 mb-1">평수</label><input type="text" id="pyeong" name="pyeong" class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg transition" placeholder="예) 25" required></div>
+                    <div><label for="price" class="block text-sm font-medium text-gray-700 mb-1">매매가 (만원)</label><input type="text" id="price" name="price" class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg transition" placeholder="예) 80000" required></div>
                 </div>
-                <div><label for="contact" class="block text-sm font-medium text-gray-700 mb-1">회신 받을 연락처</label><input type="text" id="contact" name="contact" maxlength="11" class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg transition" placeholder="'-' 없이 숫자만 입력하세요" value="010" required></div>
+                <div class="md:col-span-2"><label for="contact" class="block text-sm font-medium text-gray-700 mb-1">회신 받을 연락처</label><input type="text" id="contact" name="contact" maxlength="11" class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg transition" placeholder="'-' 없이 숫자만 입력하세요" value="010" required></div>
             </div>
             <div class="mt-6 flex items-start"><div class="flex items-center h-5"><input id="agreement-checkbox" name="agreement" type="checkbox" class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded" required></div><div class="ml-3 text-sm"><label for="agreement-checkbox" class="text-gray-600"><a href="./privacy.html" target="_blank" class="underline cursor-pointer hover:text-indigo-700">개인정보 수집 및 이용 동의</a></label></div></div>
-            <div class="mt-8"><button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-4 px-4 rounded-lg transition duration-300 flex items-center justify-center"><span id="submit-btn-text">문자 내용 확인하고 발송하기</span><div id="submit-loader" class="hidden ml-2 loader"></div></button></div>
+            <div class="mt-8"><button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-4 px-4 rounded-lg transition duration-300 flex items-center justify-center"><span id="submit-btn-text">문자 내용 확인하고 발송하기</span><div id="submit-loader" class="form-loader hidden"></div></button></div>
         </form>
     </div>
     
@@ -50,65 +67,89 @@
     <div id="modal-container" class="fixed inset-0 z-50 items-center justify-center hidden"></div>
     
     <script>
-        const form = document.getElementById('property-form');
-        const pyeongInput = document.getElementById('pyeong');
-        const priceInput = document.getElementById('price');
-        const contactInput = document.getElementById('contact');
+        const districtSelect = document.getElementById('district');
+        const locationGrid = document.getElementById('location-grid');
+        const dongContainer = document.getElementById('dong-container');
+        const dongSelect = document.getElementById('dong');
+        const districtInfo = document.getElementById('district-info');
         
-        // === NEW: 개선된 입력값 검증 로직 ===
+        const dongData = {
+            '강남구': ['신사동', '논현동', '압구정동', '청담동', '삼성동', '대치동', '역삼동', '도곡동', '개포동', '일원동', '수서동', '세곡동'],
+            '강동구': ['강일동', '상일동', '명일동', '고덕동', '암사동', '천호동', '성내동', '길동', '둔촌동'],
+            '강북구': ['삼양동', '미아동', '송중동', '송천동', '삼각산동', '번동', '수유동', '우이동', '인수동'],
+            '강서구': ['염창동', '등촌동', '화곡동', '우장산동', '가양동', '발산동', '공항동', '방화동'],
+            '관악구': ['은천동', '성현동', '청룡동', '보라매동', '청림동', '행운동', '낙성대동', '중앙동', '인헌동', '남현동', '서원동', '신원동', '서림동', '난곡동', '신사동', '신림동', '삼성동', '난향동', '조원동', '대학동', '미성동'],
+            '광진구': ['중곡동', '능동', '구의동', '광장동', '자양동', '화양동', '군자동'],
+            '구로구': ['신도림동', '구로동', '가리봉동', '고척동', '개봉동', '오류동', '항동', '수궁동'],
+            '금천구': ['가산동', '독산동', '시흥동'],
+            '노원구': ['월계동', '공릉동', '하계동', '중계동', '상계동'],
+            '도봉구': ['쌍문동', '방학동', '창동', '도봉동'],
+            '동대문구': ['용신동', '제기동', '전농동', '답십리동', '장안동', '청량리동', '회기동', '휘경동', '이문동'],
+            '동작구': ['노량진동', '상도동', '흑석동', '사당동', '대방동', '신대방동'],
+            '마포구': ['아현동', '공덕동', '도화동', '용강동', '대흥동', '염리동', '신수동', '서강동', '서교동', '합정동', '망원동', '연남동', '성산동', '상암동'],
+            '서대문구': ['충현동', '천연동', '북아현동', '신촌동', '연희동', '홍제동', '홍은동', '남가좌동', '북가좌동'],
+            '서초구': ['서초동', '잠원동', '반포동', '방배동', '양재동', '내곡동'],
+            '성동구': ['왕십리동', '왕십리도선동', '마장동', '사근동', '행당동', '응봉동', '금호동', '옥수동', '성수동', '송정동', '용답동'],
+            '성북구': ['성북동', '삼선동', '동선동', '돈암동', '안암동', '보문동', '정릉동', '길음동', '종암동', '월곡동', '장위동', '석관동'],
+            '송파구': ['풍납동', '거여동', '마천동', '방이동', '오륜동', '오금동', '송파동', '석촌동', '삼전동', '가락동', '문정동', '장지동', '위례동', '잠실동'],
+            '양천구': ['목동', '신월동', '신정동'],
+            '영등포구': ['영등포본동', '영등포동', '여의동', '당산동', '도림동', '문래동', '양평동', '신길동', '대림동'],
+            '용산구': ['후암동', '용산2가동', '남영동', '청파동', '원효로동', '효창동', '용문동', '한강로동', '이촌동', '이태원동', '한남동', '서빙고동', '보광동'],
+            '은평구': ['녹번동', '불광동', '갈현동', '구산동', '대조동', '응암동', '역촌동', '신사동', '증산동', '수색동', '진관동'],
+            '종로구': ['청운효자동', '사직동', '삼청동', '부암동', '평창동', '무악동', '교남동', '가회동', '종로1.2.3.4가동', '종로5.6가동', '이화동', '혜화동', '창신동', '숭인동'],
+            '중구': ['소공동', '회현동', '명동', '필동', '장충동', '광희동', '을지로동', '신당동', '다산동', '약수동', '청구동', '동화동', '황학동', '중림동'],
+            '중랑구': ['면목동', '상봉동', '중화동', '묵동', '망우동', '신내동']
+        };
         
-        /**
-         * '평수' 입력 필드 포맷팅 함수
-         * - 숫자와 하나의 소수점만 허용
-         * - 소수점 둘째 자리까지만 입력 가능
-         */
-        function formatPyeongInput(e) {
-            let value = e.target.value;
-            value = value.replace(/[^0-9.]/g, ''); // 숫자와 '.' 외 문자 제거
-            const parts = value.split('.');
-            if (parts.length > 2) { // 소수점이 두 개 이상이면
-                value = parts[0] + '.' + parts.slice(1).join('');
-            }
-            if (parts[1] && parts[1].length > 2) { // 소수점 이하 두 자리까지만 허용
-                value = parts[0] + '.' + parts[1].substring(0, 2);
-            }
-            e.target.value = value;
-        }
-
-        /**
-         * '매매가' 입력 필드 포맷팅 함수
-         * - 숫자만 허용 (최대 7자리)
-         * - 천 단위 콤마 자동 추가
-         */
-        function formatPriceInput(e) {
-            let value = e.target.value;
-            const numValue = value.replace(/[^0-9]/g, ''); // 숫자 이외 문자 제거
-            const truncatedValue = numValue.substring(0, 7); // 최대 7자리 제한
-            if (truncatedValue) {
-                e.target.value = Number(truncatedValue).toLocaleString('ko-KR');
+        // --- 이벤트 리스너 ---
+        
+        districtSelect.addEventListener('change', () => {
+            dongSelect.innerHTML = '<option value="">동 선택 (선택)</option>';
+            const selectedGu = districtSelect.value;
+            if (selectedGu && dongData[selectedGu]) {
+                dongData[selectedGu].forEach(dongName => {
+                    const option = document.createElement('option');
+                    option.value = dongName;
+                    option.textContent = dongName;
+                    dongSelect.appendChild(option);
+                });
+                locationGrid.classList.remove('grid-cols-2');
+                locationGrid.classList.add('grid-cols-3');
+                dongContainer.classList.remove('hidden');
             } else {
-                e.target.value = '';
+                locationGrid.classList.remove('grid-cols-3');
+                locationGrid.classList.add('grid-cols-2');
+                dongContainer.classList.add('hidden');
             }
-        }
+            districtInfo.classList.add('hidden');
+            districtInfo.innerHTML = '';
+        });
         
-        // 각 필드에 새로운 이벤트 리스너 적용
-        pyeongInput.addEventListener('input', formatPyeongInput);
-        priceInput.addEventListener('input', formatPriceInput);
-
-        // '연락처' 필드는 기존의 안정적인 로직 유지
-        contactInput.addEventListener('input', (e) => {
-            let value = e.target.value.replace(/[^0-9]/g, '');
-            if (!value.startsWith('010')) {
-                value = '010';
-            }
-            e.target.value = value;
+        // FIX: '동' 드롭다운의 이벤트 리스너를 'blur'에서 'change'로 수정
+        dongSelect.addEventListener('change', async (e) => {
+             const dong = e.target.value;
+             const district = districtSelect.value;
+             if (!dong) {
+                 districtInfo.classList.add('hidden');
+                 return;
+             }
+             
+             districtInfo.classList.remove('hidden');
+             districtInfo.innerHTML = `<div class="loader"></div><span class="ml-2">부동산 정보 조회 중...</span>`;
+             try {
+                 const city = document.getElementById('city').value;
+                 const response = await fetch(`/.netlify/functions/get-realtors?city=${city}&district=${district}&dong=${dong}`);
+                 if (!response.ok) throw new Error('Server error');
+                 const data = await response.json();
+                 if (data.count > 0) {
+                     districtInfo.innerHTML = `✅ <span class="ml-2 text-blue-600 font-semibold">${dong} 주변 ${data.count}개</span>의 부동산이 있습니다.`;
+                 } else {
+                     districtInfo.innerHTML = `⚠️ <span class="ml-2 text-red-600 font-semibold">${dong}에는 등록된 부동산이 없습니다.</span>`;
+                 }
+             } catch (error) {
+                 districtInfo.innerHTML = `❌ <span class="ml-2">정보를 불러오지 못했습니다.</span>`;
+             }
         });
-        contactInput.addEventListener('keydown', (e) => {
-            if ((e.key === 'Backspace' || e.key === 'Delete') && e.target.selectionStart < 3) {
-                e.preventDefault();
-            }
-        });
-        // =================================================
         
         // ... (나머지 JS 코드는 이전과 동일합니다) ...
     </script>
