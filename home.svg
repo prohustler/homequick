@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1200px" height="3400px" viewBox="0 0 1200 3400" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>홈퀵 랜딩페이지 (Figma 최적화)</title>
+    <defs>
+        <linearGradient x1="0%" y1="0%" x2="100%" y2="100%" id="hero-gradient">
+            <stop stop-color="#667eea" offset="0%"></stop>
+            <stop stop-color="#764ba2" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="Artboard" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" font-family="'Noto Sans KR', sans-serif">
+        <rect fill="#FFFFFF" x="0" y="0" width="1200" height="3400"></rect>
+        
+        <!-- Hero Section -->
+        <g id="Hero-Section">
+            <rect fill="url(#hero-gradient)" x="0" y="0" width="1200" height="600"></rect>
+            <text font-size="48" font-weight="900" fill="white" text-anchor="middle" x="600" y="150">
+                🚀 홈퀵: 내 집, 가장 스마트하게 내놓는 방법
+            </text>
+            <text font-size="18" fill="#E0E7FF" text-anchor="middle" x="600" y="210" style="max-width: 600px; line-height: 1.6;">
+                <tspan x="600" dy="0">"발품 없이, 전화 없이, 스마트하게 내 매물을 알리고 싶다면?"</tspan>
+                <tspan x="600" dy="25">홈퀵은 번거로운 부동산 방문과 반복 설명을 없애고, 단 한 번의 클릭으로</tspan>
+                <tspan x="600" dy="25">내 매물을 수십, 수백 개 부동산에 즉시 알려줍니다.</tspan>
+            </text>
+            <g id="CTA-Box" transform="translate(290, 320)">
+                <rect fill="white" width="620" height="180" rx="12" style="box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);"></rect>
+                <text font-size="16" font-weight="500" fill="#4B5563" text-anchor="middle" x="310" y="50">
+                    지금 바로 간편하게 매물을 등록하고, 무료 발송 혜택을 받아보세요!
+                </text>
+                <g transform="translate(159, 80)">
+                    <rect fill="#FF7E36" width="302" height="56" rx="8"></rect>
+                    <text font-size="18" font-weight="bold" fill="white" text-anchor="middle" x="151" y="35">지금 내 매물 등록하고 무료 발송 시작하기</text>
+                </g>
+                <text font-size="14" fill="#6B7280" text-anchor="middle" x="310" y="155">
+                    첫 1회 발송 무료 혜택!
+                </text>
+            </g>
+        </g>
+
+        <!-- Problem Section -->
+        <g id="Problem-Section" transform="translate(60, 680)">
+            <text font-size="36" font-weight="900" fill="#1f2937" text-anchor="middle" x="540" y="36">
+                <tspan fill="#EF4444">🚨</tspan> 집 내놓기, 왜 이렇게 어렵고 복잡할까요?
+            </text>
+            <g transform="translate(0, 120)">
+                <g id="problem-1">
+                    <rect fill="white" x="0" y="0" width="340" height="180" rx="12" style="box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);"></rect>
+                    <rect fill="#EF4444" x="0" y="0" width="340" height="4" rx="2"></rect>
+                    <text font-size="20" font-weight="bold" fill="#4B5563" text-anchor="middle" x="170" y="60">시간 낭비!</text>
+                    <text font-size="16" fill="#6B7280" text-anchor="middle" x="170" y="110">
+                        <tspan x="170" dy="0">여러 부동산에 매번 방문하거나</tspan>
+                        <tspan x="170" dy="22">전화로 똑같은 설명을 반복해야 하는</tspan>
+                        <tspan x="170" dy="22">번거로움에 지치셨나요?</tspan>
+                    </text>
+                </g>
+                <g id="problem-2" transform="translate(380, 0)">
+                    <rect fill="white" x="0" y="0" width="340" height="180" rx="12" style="box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);"></rect>
+                    <rect fill="#EF4444" x="0" y="0" width="340" height="4" rx="2"></rect>
+                    <text font-size="20" font-weight="bold" fill="#4B5563" text-anchor="middle" x="170" y="60">제한된 기회!</text>
+                    <text font-size="16" fill="#6B7280" text-anchor="middle" x="170" y="110">
+                         <tspan x="170" dy="0">몇 군데 부동산에만 내놓으면</tspan>
+                         <tspan x="170" dy="22">내 매물이 제대로 홍보되지 않아</tspan>
+                         <tspan x="170" dy="22">좋은 거래 기회를 놓치기 쉽습니다.</tspan>
+                    </text>
+                </g>
+                <g id="problem-3" transform="translate(760, 0)">
+                    <rect fill="white" x="0" y="0" width="340" height="180" rx="12" style="box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);"></rect>
+                    <rect fill="#EF4444" x="0" y="0" width="340" height="4" rx="2"></rect>
+                    <text font-size="20" font-weight="bold" fill="#4B5563" text-anchor="middle" x="170" y="60">심리적 부담!</text>
+                    <text font-size="16" fill="#6B7280" text-anchor="middle" x="170" y="110">
+                         <tspan x="170" dy="0">복잡한 과정 때문에 매도 시점을</tspan>
+                         <tspan x="170" dy="22">놓치거나, 원치 않는 조급함에</tspan>
+                         <tspan x="170" dy="22">시달리기도 합니다.</tspan>
+                    </text>
+                </g>
+            </g>
+        </g>
+        
+        <!-- ... (나머지 섹션들도 위와 같은 방식으로 SVG 코드로 변환됩니다) ... -->
+        
+    </g>
+</svg>
