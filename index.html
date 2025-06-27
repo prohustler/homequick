@@ -25,19 +25,19 @@
     <!-- ======================================================= -->
     <!-- 1. 랜딩페이지 뷰 (항상 보이는 기본 화면)                  -->
     <!-- ======================================================= -->
-    <div id="landing-view">
-        <header class="py-20 text-center text-white" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
-            <div class="max-w-4xl mx-auto px-4">
-                <h1 class="text-4xl md:text-5xl font-black mb-4 leading-tight">🚀 홈퀵: 내 집, 가장 스마트하게 내놓는 방법</h1>
-                <p class="text-lg text-indigo-100 max-w-3xl mx-auto mb-8">"발품 없이, 전화 없이, 스마트하게!" 홈퀵은 번거로운 부동산 방문과 반복 설명을 없애고, 단 한 번의 클릭으로 내 매물을 수십, 수백 개 부동산에 즉시 알려줍니다.</p>
-                <div class="bg-white p-8 rounded-xl shadow-2xl max-w-2xl mx-auto text-center">
-                    <p class="text-gray-700 font-medium mb-4">지금 바로 간편하게 매물을 등록하고, 무료 발송 혜택을 받아보세요!</p>
-                    <a href="#" id="start-app-btn" class="w-full inline-block text-white font-bold py-4 px-6 rounded-lg transition-all duration-300 ease-in-out" style="background-color: #ff7e36; box-shadow: 0 4px 15px rgba(255, 126, 54, 0.4);">지금 내 매물 등록하고 무료 발송 시작하기</a>
-                    <p class="text-sm text-gray-500 mt-2">첫 1회 발송 무료 혜택!</p>
-                </div>
+    <header class="landing-hero py-20 text-center">
+        <div class="landing-container">
+            <h1 class="text-4xl md:text-6xl font-black mb-4 leading-tight">🚀 홈퀵: 내 집, 가장 스마트하게 내놓는 방법</h1>
+            <p class="text-lg text-indigo-100 max-w-3xl mx-auto mb-8">"발품 없이, 전화 없이, 스마트하게 내 매물을 알리고 싶다면?" 홈퀵은 번거로운 부동산 방문과 반복 설명을 없애고, 단 한 번의 클릭으로 내 매물을 수십, 수백 개 부동산에 즉시 알려줍니다.</p>
+            <div class="bg-white p-8 rounded-xl shadow-2xl max-w-2xl mx-auto text-left">
+                <p class="text-gray-700 font-medium mb-4 text-center">지금 바로 간편하게 매물을 등록하고, 무료 발송 혜택을 받아보세요!</p>
+                <!-- FIX: 매물 등록 페이지(register.html)로 이동하는 링크로 수정 -->
+                <a href="./register.html" class="cta-button w-full text-center">지금 내 매물 등록하고 무료 발송 시작하기</a>
+                <p class="text-sm text-gray-500 mt-2 text-center">첫 1회 발송 무료 혜택!</p>
             </div>
-        </header>
-         <main>
+        </div>
+    </header>
+    <main>
         <section id="problem" class="bg-gray-50 landing-section">
             <div class="landing-container">
                 <h2 class="section-title"><span class="text-red-500">🚨</span>집 내놓기, 왜 이렇게 어렵고 복잡할까요?</h2>
