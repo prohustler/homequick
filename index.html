@@ -41,20 +41,19 @@
     <div id="landing-view">
         <header class="landing-hero py-20 text-center">
             <div class="landing-container">
-                <h1 class="text-4xl md:text-6xl font-black mb-4 leading-tight">🚀 홈퀵: 내 집, 가장 스마트하게 내놓는 방법</h1>
-                <p class="text-lg text-indigo-100 max-w-3xl mx-auto mb-8">"발품 없이, 전화 없이, 스마트하게 내 매물을 알리고 싶다면?" </p>
-                <p class="text-lg text-indigo-100 max-w-3xl mx-auto mb-8"> 홈퀵은 번거로운 부동산 방문과 반복 설명을 없애고, 단 한 번의 클릭으로 내 매물을 수십, 수백 개 부동산에 즉시 알려줍니다.</p>
+                <h1 class="text-4xl md:text-6xl font-black mb-4 leading-tight">🚀 홈퀵: 문자 1통으로 부동산에 매물 내놓는 방법</h1>
+                <p class="text-lg text-indigo-100 max-w-3xl mx-auto mb-8">"발품 없이, 전화 없이, 내 매물을 알리세요" </p>
+                <p class="text-lg text-indigo-100 max-w-3xl mx-auto mb-8"> 홈퀵은 번거로운 부동산 방문과 반복 설명 없이, 단 한 번의 클릭으로 내 매물을 수십, 수백 개 부동산에 즉시 알려줍니다.</p>
                 <div class="bg-white p-8 rounded-xl shadow-2xl max-w-2xl mx-auto text-center">
                     <p class="text-gray-700 font-medium mb-4">지금 바로 간편하게 매물을 등록하고, 무료 발송 혜택을 받아보세요!</p>
                     <a href="#" id="start-app-btn" class="cta-button">지금 내 매물 등록하고 무료 발송 시작하기</a>
-                    <p class="text-sm text-gray-500 mt-2">첫 1회 발송 무료 혜택!</p>
                 </div>
             </div>
         </header>
         <main>
             <section id="problem" class="bg-gray-50 landing-section">
                 <div class="landing-container">
-                    <h2 class="section-title"><span class="text-red-500">🚨</span>집 내놓기, 왜 이렇게 어렵고 복잡할까요?</h2>
+                    <h2 class="section-title"><span class="text-red-500">🚨</span>집 내놓기, 왜 이렇게 번거로울까요?</h2>
                     <div class="grid md:grid-cols-3 gap-8 text-center">
                         <div class="card"><h3 class="font-bold text-xl mb-2 text-gray-800">시간 낭비!</h3><p class="text-gray-600">여러 부동산에 매번 방문하거나 전화로 똑같은 설명을 반복해야 하는 번거로움에 지치셨나요?</p></div>
                         <div class="card"><h3 class="font-bold text-xl mb-2 text-gray-800">제한된 기회!</h3><p class="text-gray-600">몇 군데 부동산에만 내놓으면 내 매물이 제대로 홍보되지 않아 좋은 거래 기회를 놓치기 쉽습니다.</p></div>
@@ -120,8 +119,8 @@
             <form id="property-form">
                 <div class="grid grid-cols-1 gap-y-5">
                     <div><label for="title" class="block text-sm font-medium text-gray-700 mb-1">매물 제목</label><input type="text" id="title" name="title" maxlength="40" class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg transition" placeholder="예) 강남역 5분 거리, 신축급 오피스텔 급매" required><div class="text-right text-sm text-gray-500 mt-1"><span id="title-char-count">0</span> / 40</div></div>
-                    <div id="location-grid" class="grid grid-cols-2 gap-x-4">
-                        <div><label for="city" class="block text-sm font-medium text-gray-700 mb-1">시/도</label><select id="city" name="city" class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg transition bg-white" required><option>서울특별시</option></select></div>
+                  <!--  <div id="location-grid" class="grid grid-cols-2 gap-x-4"> -->
+                    <div><label for="city" class="block text-sm font-medium text-gray-700 mb-1">시/도</label><select id="city" name="city" class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg transition bg-white" required><option>서울특별시</option></select></div>
                         <div id="district-wrapper"><label for="district" class="block text-sm font-medium text-gray-700 mb-1">지역 (구)</label><select id="district" name="district" class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg transition bg-white" required><option value="">선택</option><option>강남구</option><option>강동구</option><option>강북구</option><option>강서구</option><option>관악구</option><option>광진구</option><option>구로구</option><option>금천구</option><option>노원구</option><option>도봉구</option><option>동대문구</option><option>동작구</option><option>마포구</option><option>서대문구</option><option>서초구</option><option>성동구</option><option>성북구</option><option>송파구</option><option>양천구</option><option>영등포구</option><option>용산구</option><option>은평구</option><option>종로구</option><option>중구</option><option>중랑구</option></select></div>
                         <div id="dong-container" class="hidden"><label for="dong" class="block text-sm font-medium text-gray-700 mb-1">지역 (동)</label><select id="dong" name="dong" class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg transition bg-white"><option value="">동 선택 (선택)</option></select></div>
                     </div>
