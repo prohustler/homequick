@@ -1,30 +1,33 @@
+<!-- 파일 이름: index.html (이 코드를 index.html 파일에 덮어쓰세요) -->
 <!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>홈퀵: 내 집, 가장 스마트하게 내놓는 방법</title>
-    <!-- SDK 및 라이브러리 -->
-    <script src="https://js.tosspayments.com/v1/payment-widget"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
     <style>
-        body { font-family: 'Noto Sans KR', sans-serif; }
-        .hidden { display: none !important; }
-        .modal-content-area { transition: transform 0.3s ease-out, opacity 0.3s ease-out; }
-        .form-input:focus { border-color: #4f46e5; box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.2); outline: none; }
-        .loader { border: 2px solid #f3f3f3; border-top: 2px solid #4f46e5; border-radius: 50%; width: 16px; height: 16px; animation: spin 1s linear infinite; }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        body { font-family: 'Noto Sans KR', sans-serif; background-color: #ffffff; -webkit-font-smoothing: antialiased; }
+        .landing-hero { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; }
+        .landing-container { max-width: 1080px; margin: 0 auto; width: 100%; box-sizing: border-box; padding: 0 20px; }
+        .landing-section { padding: 80px 0; }
+        .section-title { font-size: 2.25rem; font-weight: 900; color: #1f2937; text-align: center; margin-bottom: 4rem; display: flex; align-items: center; justify-content: center; gap: 0.5rem; }
+        .cta-button {
+            display: inline-block;
+            background-color: #ff7e36; color: white; padding: 16px 32px; text-decoration: none;
+            border-radius: 8px; font-size: 1.125rem; font-weight: 700;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 126, 54, 0.4);
+        }
+        .cta-button:hover { background-color: #ff6a13; transform: translateY(-3px); box-shadow: 0 6px 20px rgba(255, 126, 54, 0.5); }
+        .card { background: white; border-radius: 12px; padding: 2rem; box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); }
     </style>
 </head>
 <body class="bg-white">
-
-    <!-- ======================================================= -->
-    <!-- 1. 랜딩페이지 뷰 (항상 보이는 기본 화면)                  -->
-    <!-- ======================================================= -->
     <header class="landing-hero py-20 text-center">
         <div class="landing-container">
             <h1 class="text-4xl md:text-6xl font-black mb-4 leading-tight">🚀 홈퀵: 내 집, 가장 스마트하게 내놓는 방법</h1>
@@ -80,159 +83,5 @@
             </div>
         </section>
     </main>
-        <footer class="bg-gray-800 text-white text-center p-6 mt-auto">
-            <p>&copy; 2025 홈퀵. All rights reserved.</p>
-        </footer>
-    </div>
-
-    <!-- ======================================================= -->
-    <!-- 2. 매물등록 모달 (버튼 클릭 시 나타나는 팝업)              -->
-    <!-- ======================================================= -->
-    <div id="register-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4">
-        <!-- 모달 배경 (Dim 처리) -->
-        <div id="register-modal-backdrop" class="fixed inset-0 bg-black bg-opacity-60"></div>
-        
-        <!-- 모달 컨텐츠 -->
-        <div class="relative w-full max-w-2xl bg-white rounded-2xl shadow-2xl p-6 md:p-10 max-h-[90vh] overflow-y-auto">
-            <!-- 닫기 버튼 -->
-            <button id="close-register-modal-btn" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-            </button>
-            
-            <div class="text-center mb-8">
-                <h1 class="text-3xl md:text-4xl font-bold text-gray-800">🏠 매물 정보 등록</h1>
-                <p class="text-gray-500 mt-2 text-md md:text-lg">아래 정보를 입력하시면 주변 부동산에 홍보됩니다.</p>
-            </div>
-            <form id="property-form">
-                <div class="grid grid-cols-1 gap-y-5">
-                    <div><label for="title" class="block text-sm font-medium text-gray-700 mb-1">매물 제목</label><input type="text" id="title" name="title" maxlength="40" class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg transition" placeholder="예) 강남역 5분 거리, 신축급 오피스텔 급매" required><div class="text-right text-sm text-gray-500 mt-1"><span id="title-char-count">0</span> / 40</div></div>
-                    <div id="location-grid" class="grid grid-cols-2 gap-x-4">
-                        <div><label for="city" class="block text-sm font-medium text-gray-700 mb-1">시/도</label><select id="city" name="city" class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg transition bg-white" required><option>서울특별시</option></select></div>
-                        <div id="district-wrapper"><label for="district" class="block text-sm font-medium text-gray-700 mb-1">지역 (구)</label><select id="district" name="district" class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg transition bg-white" required><option value="">선택</option><option>강남구</option><option>강동구</option><option>강북구</option><option>강서구</option><option>관악구</option><option>광진구</option><option>구로구</option><option>금천구</option><option>노원구</option><option>도봉구</option><option>동대문구</option><option>동작구</option><option>마포구</option><option>서대문구</option><option>서초구</option><option>성동구</option><option>성북구</option><option>송파구</option><option>양천구</option><option>영등포구</option><option>용산구</option><option>은평구</option><option>종로구</option><option>중구</option><option>중랑구</option></select></div>
-                        <div id="dong-container" class="hidden"><label for="dong" class="block text-sm font-medium text-gray-700 mb-1">지역 (동)</label><select id="dong" name="dong" class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg transition bg-white"><option value="">동 선택 (선택)</option></select></div>
-                    </div>
-                    <div class="col-span-1 md:col-span-2"><div id="district-info" class="text-sm text-gray-600 h-5 flex items-center hidden"></div></div>
-                    <div class="grid grid-cols-2 gap-x-4">
-                        <div><label for="pyeong" class="block text-sm font-medium text-gray-700 mb-1">평수</label><input type="text" id="pyeong" name="pyeong" class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg transition" placeholder="예) 25.5" required></div>
-                        <div><label for="price" class="block text-sm font-medium text-gray-700 mb-1">매매가 (만원)</label><input type="text" id="price" name="price" class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg transition" placeholder="예) 80,000" required></div>
-                    </div>
-                    <div><label for="contact" class="block text-sm font-medium text-gray-700 mb-1">회신 받을 연락처</label><input type="text" id="contact" name="contact" maxlength="11" class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg transition" placeholder="'-' 없이 숫자만 입력하세요" value="010" required></div>
-                </div>
-                <div class="mt-6 flex items-start"><div class="flex items-center h-5"><input id="agreement-checkbox" name="agreement" type="checkbox" class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded" required></div><div class="ml-3 text-sm"><label for="agreement-checkbox" class="text-gray-600"><span id="privacy-link" class="underline cursor-pointer hover:text-indigo-700">개인정보 수집 및 이용 동의</span></label></div></div>
-                <div class="mt-8"><button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-4 px-4 rounded-lg transition duration-300 flex items-center justify-center"><span id="submit-btn-text">문자 내용 확인하고 발송하기</span><div id="submit-loader" class="hidden ml-2 loader"></div></button></div>
-            </form>
-        </div>
-    </div>
-    
-    <!-- 결제/확인용 공용 모달 -->
-    <div id="payment-modal-container" class="fixed inset-0 z-50 items-center justify-center hidden"></div>
-
-    <script>
-        // --- 전역 변수 및 초기화 ---
-        const landingView = document.getElementById('landing-view');
-        const registerModal = document.getElementById('register-modal');
-        const startAppBtn = document.getElementById('start-app-btn');
-        const closeRegisterModalBtn = document.getElementById('close-register-modal-btn');
-        const registerModalBackdrop = document.getElementById('register-modal-backdrop');
-        const form = document.getElementById('property-form');
-        const pyeongInput = document.getElementById('pyeong');
-        const priceInput = document.getElementById('price');
-        const contactInput = document.getElementById('contact');
-        const districtSelect = document.getElementById('district');
-        const locationGrid = document.getElementById('location-grid');
-        const dongContainer = document.getElementById('dong-container');
-        const dongSelect = document.getElementById('dong');
-        const districtInfo = document.getElementById('district-info');
-
-        // --- 메인 뷰 <-> 등록 모달 뷰 전환 로직 ---
-        function showRegisterModal() { registerModal.classList.remove('hidden'); document.body.style.overflow = 'hidden'; }
-        function hideRegisterModal() { registerModal.classList.add('hidden'); document.body.style.overflow = 'auto'; }
-        startAppBtn.addEventListener('click', (e) => { e.preventDefault(); showRegisterModal(); });
-        closeRegisterModalBtn.addEventListener('click', hideRegisterModal);
-        registerModalBackdrop.addEventListener('click', hideRegisterModal);
-
-        // --- 여기서부터 매물등록 앱의 모든 JavaScript 로직 시작 ---
-        
-        // === NEW: 개선된 입력값 검증 로직 ===
-        
-        /**
-         * '평수' 입력 필드 포맷팅 함수
-         */
-        function formatPyeongInput(e) {
-            let value = e.target.value;
-            value = value.replace(/[^0-9.]/g, ''); // 숫자와 '.' 외 문자 제거
-            const parts = value.split('.');
-            if (parts.length > 2) {
-                value = parts[0] + '.' + parts.slice(1).join('');
-            }
-            if (parts[1] && parts[1].length > 2) {
-                value = parts[0] + '.' + parts[1].substring(0, 2);
-            }
-            e.target.value = value;
-        }
-
-        /**
-         * '매매가' 입력 필드 포맷팅 함수
-         */
-        function formatPriceInput(e) {
-            let value = e.target.value;
-            const numValue = value.replace(/[^0-9]/g, '');
-            const truncatedValue = numValue.substring(0, 7);
-            if (truncatedValue) {
-                e.target.value = Number(truncatedValue).toLocaleString('ko-KR');
-            } else {
-                e.target.value = '';
-            }
-        }
-        
-        // '연락처' 필드는 기존의 안정적인 로직 유지
-        contactInput.addEventListener('input', (e) => {
-            let value = e.target.value.replace(/[^0-9]/g, '');
-            if (!value.startsWith('010')) {
-                value = '010';
-            }
-            e.target.value = value;
-        });
-        contactInput.addEventListener('keydown', (e) => {
-            if ((e.key === 'Backspace' || e.key === 'Delete') && e.target.selectionStart < 3) {
-                e.preventDefault();
-            }
-        });
-        
-        // 각 필드에 새로운 이벤트 리스너 적용
-        pyeongInput.addEventListener('input', formatPyeongInput);
-        priceInput.addEventListener('input', formatPriceInput);
-        // =================================================
-        
-        // 제목 글자 수 카운터
-        document.getElementById('title').addEventListener('input', (e) => { document.getElementById('title-char-count').textContent = e.target.value.length; });
-        
-        // 동(dong) 데이터
-        const dongData = { /* ... 동 데이터 ... */ };
-        
-        // '구' 선택 시 '동' 드롭다운 동적 생성 및 UI 변경
-        districtSelect.addEventListener('change', () => {
-            dongSelect.innerHTML = '<option value="">동 선택 (선택)</option>';
-            const selectedGu = districtSelect.value;
-            if (selectedGu && dongData[selectedGu]) {
-                dongData[selectedGu].forEach(dongName => {
-                    const option = document.createElement('option');
-                    option.value = dongName;
-                    option.textContent = dongName;
-                    dongSelect.appendChild(option);
-                });
-                locationGrid.classList.remove('grid-cols-2');
-                locationGrid.classList.add('grid-cols-3');
-                dongContainer.classList.remove('hidden');
-            } else {
-                locationGrid.classList.remove('grid-cols-3');
-                locationGrid.classList.add('grid-cols-2');
-                dongContainer.classList.add('hidden');
-            }
-            districtInfo.classList.add('hidden');
-        });
-        
-        // ... (나머지 JS 코드)
-    </script>
 </body>
 </html>
